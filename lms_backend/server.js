@@ -101,16 +101,16 @@ app.get('*', (req, res) => {
 const startServer = async () => {
   try {
     await sequelize.authenticate();
+    console.log('Database connection has been established successfully.');
     await sequelize.sync({ alter: true });
-    
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-
   } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
+    console.error('Database connection failed on startup:', error);
   }
+  
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 };
 
-startServer();
+
+startServer();
