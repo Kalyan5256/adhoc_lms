@@ -88,12 +88,15 @@ app.get('/health', (req, res) => {
 app.use(express.static(path.join(__dirname, '../adhoc_test_lms/dist')));
 
 // Serve index.html for all non-API paths (React Router fallback)
-app.get('*', (req, res) => {
+app.get('/{*splat}', (req, res) => {
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ success: false, message: 'API route not found' });
   }
   res.sendFile(path.join(__dirname, '../adhoc_test_lms/dist/index.html'));
 });
+
+
+
 
 
 // ============ START SERVER ============
