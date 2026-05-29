@@ -1,7 +1,10 @@
 const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv');
+const path = require('path');
 
+dotenv.config({ path: path.join(__dirname, '../.env') });
 dotenv.config();
+
 
 const databaseUrl = process.env.DATABASE_URL;
 

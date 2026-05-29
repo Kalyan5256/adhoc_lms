@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
-dotenv.config();
 const path = require('path');
+dotenv.config({ path: path.join(__dirname, '.env') });
+dotenv.config();
 
 
 const passwordRoutes = require('./routes/passwordRoutes');
