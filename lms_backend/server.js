@@ -98,7 +98,13 @@ app.get('*', (req, res) => {
 
 // ============ START SERVER ============
 
-const startServer = async () => {
+// Start server synchronously so Passenger/Hostinger can hook it immediately
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+// Authenticate database in the background
+const startDatabase = async () => {
   try {
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');
@@ -106,11 +112,6 @@ const startServer = async () => {
   } catch (error) {
     console.error('Database connection failed on startup:', error);
   }
-  
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
 };
 
-
-startServer();
+startDatabase();
