@@ -8,8 +8,10 @@
     "build:client": "npm run build --prefix adhoc_test_lms",
     "install-all": "npm run install:client && npm run install:server",
     "build-all": "npm run build:client",
+    "build": "npm run build-all",
     "postinstall": "npm run install-all && npm run build-all",
     "start": "node lms_backend/server.js"
   }
+
 
 }
