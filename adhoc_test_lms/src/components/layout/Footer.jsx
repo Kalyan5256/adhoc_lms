@@ -119,7 +119,7 @@ export function Footer() {
 
         {/* Legal Links Row (Mobile Friendly) */}
         <div className="pt-8 pb-6 border-t border-surface-dim/20">
-          <div className="flex flex-wrap justify-center gap-6 mb-6">
+          <div className="flex flex-nowrap justify-center gap-2 md:gap-6 mb-6 whitespace-nowrap text-[8px] sm:text-[10px]">
             {links.legal.map(link => (
               <Link key={link.name} to={link.href} className="text-sm text-on-surface-variant hover:text-primary transition-colors">
                 {link.name}

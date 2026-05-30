@@ -237,7 +237,7 @@ export default function Home() {
                   <p className="text-3xl font-headline font-bold text-primary leading-none mb-1">98%</p>
                   <p className="text-[10px] font-bold text-secondary uppercase tracking-[0.2em]">Success Rate</p>
                 </div>
-                <Link to="" className="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center transition-transform shadow-lg">
+                <Link to="" aria-label="Play video" className="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center transition-transform shadow-lg">
                   <Play className="w-5 h-5 fill-current" />
                 </Link>
               </div>
@@ -367,7 +367,6 @@ export default function Home() {
               <p className="text-secondary max-w-md">Our certs are designed directly with enterprise CTOs, providing immediate professional legitimacy.</p>
               <div className="mt-6 flex items-center gap-2 text-primary text-sm font-medium">
                 Recognized by 500+ companies
-                <ArrowRight className="w-3 h-3" />
               </div>
             </motion.div>
 
