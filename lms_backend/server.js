@@ -1,7 +1,12 @@
 const dotenv = require('dotenv');
 const path = require('path');
+// Load environment variables from local (.env) and root (../.env) directories
 dotenv.config({ path: path.join(__dirname, '.env') });
+dotenv.config({ path: path.join(__dirname, '../.env') });
 dotenv.config();
+
+// Explicitly load models and associations
+require('./models');
 
 
 const passwordRoutes = require('./routes/passwordRoutes');
@@ -84,15 +89,15 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Serve static files from the React/Vite app
-app.use(express.static(path.join(__dirname, '../adhoc_test_lms/dist')));
+// Serve static files from the React/Vite app (copied to the root dist folder)
+app.use(express.static(path.join(__dirname, '../dist')));
 
 // Serve index.html for all non-API paths (React Router fallback)
-app.get('/{*splat}', (req, res) => {
+app.get('*', (req, res) => {
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ success: false, message: 'API route not found' });
   }
-  res.sendFile(path.join(__dirname, '../adhoc_test_lms/dist/index.html'));
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 

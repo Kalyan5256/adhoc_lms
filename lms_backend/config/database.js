@@ -2,7 +2,9 @@ const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv');
 const path = require('path');
 
+// Load environment variables from parent (../.env) and local (.env) directories
 dotenv.config({ path: path.join(__dirname, '../.env') });
+dotenv.config({ path: path.join(__dirname, '.env') });
 dotenv.config();
 
 
