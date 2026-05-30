@@ -77,7 +77,8 @@ exports.forgotPassword = async (req, res) => {
     });
 
     // Create reset URL
-    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    const frontendUrl = process.env.FRONTEND_URL || req.get('origin') || `${req.protocol}://${req.get('host')}`;
+    const resetUrl = `${frontendUrl}/reset-password/${resetToken}`;
 
     // Send email (using Resend or Nodemailer)
     const emailService = require('../services/emailService');
