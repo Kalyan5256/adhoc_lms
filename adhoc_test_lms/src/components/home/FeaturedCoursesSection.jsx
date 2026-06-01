@@ -46,7 +46,7 @@ export default function FeaturedCoursesSection({ featuredCourses, coursesLoading
                   aria-label={`Learn more about ${course.title}`}
                   className="inline-flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all"
                 >
-                  Learn More <ArrowRight className="w-3 h-3" />
+                  Learn more about {course.title} <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
             ))
