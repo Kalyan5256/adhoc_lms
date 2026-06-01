@@ -1,9 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Header } from './components/layout/Header'
-import { Footer } from './components/layout/Footer'
 import { Toaster } from 'sonner'
-import { BottomNav } from './components/layout/BottomNav'
 import { ScrollToTop } from './components/layout/ScrollToTop'
 import Terms from "./components/Terms";
 import Privacy from "./components/Privacy"
@@ -39,6 +37,8 @@ const AdminBlogs = React.lazy(() => import('./pages/admin/AdminBlogs'))
 const AdminFeedbacks = React.lazy(() => import('./pages/admin/AdminFeedbacks'))
 const StudentFeedback = React.lazy(() => import('./pages/student/StudentFeedback'))
 const AboutUs = React.lazy(() => import('./components/AboutUs'))
+const Footer = React.lazy(() => import('./components/layout/Footer').then(module => ({ default: module.Footer })))
+const BottomNav = React.lazy(() => import('./components/layout/BottomNav').then(module => ({ default: module.BottomNav })))
 import { ErrorBoundary } from './components/common/ErrorBoundary'
 
 function App() {
@@ -94,8 +94,10 @@ function App() {
           </Routes>
           </React.Suspense>
         </main>
-        <Footer />
-        <BottomNav />
+        <React.Suspense fallback={null}>
+          <Footer />
+          <BottomNav />
+        </React.Suspense>
         <Toaster position="top-right" richColors duration={5000} closeButton />
       </div>
     </Router>

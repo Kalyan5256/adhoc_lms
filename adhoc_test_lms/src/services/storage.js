@@ -17,6 +17,25 @@ const _cache = {
 }
 const CACHE_DURATION = 10 * 60 * 1000 // 10 minutes
 
+const loadRazorpay = () => {
+  return new Promise((resolve) => {
+    if (typeof window === 'undefined') {
+      resolve(false)
+      return
+    }
+    if (window.Razorpay) {
+      resolve(true)
+      return
+    }
+    const script = document.createElement('script')
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+    script.async = true
+    script.onload = () => resolve(true)
+    script.onerror = () => resolve(false)
+    document.body.appendChild(script)
+  })
+}
+
 export const StorageService = {
   // ============ AUTHENTICATION ============
   
@@ -299,8 +318,15 @@ export const StorageService = {
           return resolve(verifyData)
         }
 
-        if (typeof window === 'undefined' || !window.Razorpay) {
-          return resolve({ success: false, message: 'Payment system not ready' })
+        if (typeof window === 'undefined') {
+          return resolve({ success: false, message: 'Payment system not supported' })
+        }
+
+        if (!window.Razorpay) {
+          const loaded = await loadRazorpay()
+          if (!loaded) {
+            return resolve({ success: false, message: 'Payment system failed to load' })
+          }
         }
 
         const options = {
