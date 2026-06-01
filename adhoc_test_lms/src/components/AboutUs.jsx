@@ -52,7 +52,7 @@ export default function AboutUs() {
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
               <h3 className="text-2xl font-headline font-bold relative z-10">Our Vision</h3>
               <p className="opacity-90 leading-relaxed text-lg relative z-10">
-                To become a global leader in educational technology, creating platforms that not only deliver knowledge but also inspire curiosity, creativity, and lifelong learning.
+                To be a leading technology and skill development organization that empowers learners, educators, and institutions through innovative digital solutions, industry-focused training, and transformative learning experiences.
               </p>
             </motion.div>
 
@@ -63,7 +63,7 @@ export default function AboutUs() {
                 <h3 className="text-2xl font-headline font-bold text-primary">Our Mission</h3>
               </div>
               <p className="text-secondary leading-relaxed">
-                We believe education should be seamless, interactive, and tailored to every learner’s journey. Our mission is to empower institutions, educators, and students with tools that simplify teaching, enhance collaboration, and unlock new opportunities for growth.
+                To deliver innovative technology solutions, industry-relevant training, internships, and experiential learning opportunities that enhance skills, foster innovation, and prepare learners for successful careers.
               </p>
             </motion.div>
 
@@ -146,7 +146,7 @@ export default function AboutUs() {
 
                 <h3 className="text-3xl font-headline font-bold text-primary mb-1">Devika Pakruthi</h3>
                 <p className="text-lg font-semibold text-secondary mb-2">Chief Executive Officer</p>
-                <p className="text-sm font-bold text-primary/80 uppercase tracking-widest bg-primary/5 inline-block px-3 py-1 rounded-full border border-primary/10">ADHOC NETWORK</p>
+                <p className="text-sm font-bold text-primary/80 uppercase tracking-widest bg-primary/5 inline-block px-3 py-1 rounded-full border border-primary/10">ADHOC NETWORK TECH</p>
               </div>
 
               {/* Awards and Prices Section */}
