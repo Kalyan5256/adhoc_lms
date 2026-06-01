@@ -258,10 +258,10 @@ export default function Home() {
       </motion.section>
 
       {/* Philosophy Section */}
-      <section id="about" className="py-12 sm:py-16 px-4 sm:px-8 bg-surface-container-lowest border-y border-surface-dim/10">
+      <section id="about" className="py-12 sm:py-16 px-3 sm:px-8 bg-surface-container-lowest border-y border-surface-dim/10">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           <div className="lg:w-1/2 space-y-8">
-            <h2 className="text-4xl font-headline font-bold text-primary">Academic Authority, Digital Speed - Now for the Enterprise</h2>
+            <h2 className="text-2xl sm:text-4xl font-headline font-bold text-primary">Academic Authority, Digital Speed - Now for the Enterprise</h2>
             <p className="text-secondary text-lg leading-relaxed">
               The traditional classroom just got an upgrade. We’ve built a high-speed learning environment that cuts through the noise. With clean typography and a distraction-free layout, mastering complex material has never been more efficient. Your path to industry-recognized certification starts here.
             </p>
@@ -278,10 +278,6 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            {/* <Link to="/about" className="inline-flex items-center gap-2 text-primary font-semibold group">
-              Learn more about our mission
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link> */}
           </div>
           <div className="lg:w-1/2 grid grid-cols-2 gap-4 w-full">
             <div className="h-48 sm:h-64 rounded-3xl bg-surface-container overflow-hidden hover:scale-105 transition-transform duration-500">
@@ -295,13 +291,13 @@ export default function Home() {
       </section>
 
       {/* Featured Courses Section (NEW) */}
-      <section id="courses" className="py-16 px-8 bg-surface">
+      <section id="courses" className="py-16 px-3 sm:px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 text-center max-w-2xl mx-auto">
             <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-xs uppercase tracking-widest mb-4">
               Featured Curriculum
             </span>
-            <h2 className="text-4xl font-headline font-bold text-primary mb-4">Most Popular Pathways</h2>
+            <h2 className="text-2xl sm:text-4xl font-headline font-bold text-primary mb-4">Most Popular Pathways</h2>
             <p className="text-secondary">Join thousands of professionals accelerating their careers with our flagship programs.</p>
           </div>
 
@@ -349,10 +345,10 @@ export default function Home() {
       </section>
 
       {/* Bento Grid Features (Enhanced) */}
-      <section className="py-16 px-8 bg-surface-container-lowest">
+      <section className="py-16 px-3 sm:px-8 bg-surface-container-lowest">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 text-center max-w-2xl mx-auto">
-            <h2 className="text-4xl font-headline font-bold text-primary mb-4">The Editorial Experience</h2>
+            <h2 className="text-2xl sm:text-4xl font-headline font-bold text-primary mb-4">The Editorial Experience</h2>
             <p className="text-secondary">Designed for professionals who demand high-end interfaces and unparalleled curriculum depth.</p>
           </div>
 
@@ -406,10 +402,10 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section (NEW) */}
-      <section id="testimonials" className="py-16 px-8 bg-surface">
+      <section id="testimonials" className="py-16 px-3 sm:px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 text-center max-w-2xl mx-auto">
-            <h2 className="text-4xl font-headline font-bold text-primary mb-4">What Our Learners Say</h2>
+            <h2 className="text-2xl sm:text-4xl font-headline font-bold text-primary mb-4">What Our Learners Say</h2>
             <p className="text-secondary">Trusted by professionals from leading companies worldwide.</p>
           </div>
 
@@ -439,28 +435,21 @@ export default function Home() {
               </div>
             ))}
           </div>
-
-          {/* <div className="text-center mt-12">
-            <a href="#testimonials" className="inline-flex items-center gap-2 text-primary font-medium group">
-              Read more success stories
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div> */}
         </div>
       </section>
 
       {/* Message from the CEO Section */}
-      <section className="py-4 px-8 bg-surface">
+      <section className="py-4 px-3 sm:px-8 bg-surface">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white dark:bg-black rounded-[2rem] p-6 sm:p-10 flex flex-col lg:flex-row items-center lg:items-start gap-12 border border-black/5 dark:border-white/5"
+            className="bg-surface-container-lowest rounded-[2rem] p-6 sm:p-10 flex flex-col lg:flex-row items-center lg:items-start gap-12 border border-surface-dim/20"
           >
             {/* CEO Image */}
             <div className="w-full lg:w-1/3 max-w-[380px]">
-              <div className="rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
+              <div className="rounded-3xl overflow-hidden shadow-2xl border border-surface-dim/20 bg-surface-container-low">
                 <img
                   src="/ceo-profile.jpg"
                   alt="Devika Pakruthi - CEO"
@@ -472,11 +461,11 @@ export default function Home() {
             </div>
 
             {/* Content */}
-            <div className="lg:w-3/4 text-black dark:text-white space-y-4">
-              <h2 className="text-2xl font-headline font-bold text-black dark:text-white mb-2">Message from the CEO</h2>
-              <div className="space-y-3 text-black dark:text-white leading-relaxed text-base">
+            <div className="lg:w-3/4 text-on-surface space-y-4">
+              <h2 className="text-2xl font-headline font-bold text-on-surface mb-2">Message from the CEO</h2>
+              <div className="space-y-3 text-on-surface leading-relaxed text-base">
                 <p>
-                  <span className="font-bold text-black dark:text-white">ADHOC NETWORK LMS</span> is dedicated to a comprehensive ecosystem for trending courses from Data Analytics to AI cutting-edge cases in EdTech. We construct each course to help overcome the divide between academic exposure and world grounded experience.
+                  <span className="font-bold text-on-surface">ADHOC NETWORK LMS</span> is dedicated to a comprehensive ecosystem for trending courses from Data Analytics to AI cutting-edge cases in EdTech. We construct each course to help overcome the divide between academic exposure and world grounded experience.
                 </p>
                 <p>
                   It gives us great joy to see our students learn the various components of professional tools to prepare them for the future. We offer a full range of trending technology courses.
@@ -486,11 +475,11 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-black/10 dark:border-white/10 flex justify-between items-center">
+              <div className="pt-4 border-t border-surface-dim/20 flex justify-between items-center">
                 <div>
-                  <p className="text-xl font-bold text-black dark:text-white">Devika Pakruthi</p>
-                  <p className="text-black dark:text-white font-medium">Chief Executive Officer</p>
-                  <p className="text-black dark:text-white text-sm font-bold uppercase tracking-wider">ADHOC NETWORK</p>
+                  <p className="text-xl font-bold text-on-surface">Devika Pakruthi</p>
+                  <p className="text-secondary font-medium">Chief Executive Officer</p>
+                  <p className="text-primary text-sm font-bold uppercase tracking-wider">ADHOC NETWORK</p>
                 </div>
                 <Link
                   to="/about-us"
@@ -505,9 +494,9 @@ export default function Home() {
       </section>
 
       {/* CTA Section (NEW) */}
-      <section className="py-12 px-8 signature-gradient">
+      <section className="py-12 px-3 sm:px-8 signature-gradient">
         <div className="max-w-4xl mx-auto text-center text-white">
-          <h2 className="text-4xl font-headline font-bold mb-4">Ready to Elevate Your Career?</h2>
+          <h2 className="text-2xl sm:text-4xl font-headline font-bold mb-4">Ready to Elevate Your Career?</h2>
           <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
              Join an exclusive community of professionals transforming their careers with our premium courses.
           </p>

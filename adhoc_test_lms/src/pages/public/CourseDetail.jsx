@@ -228,7 +228,7 @@ export default function CourseDetail() {
         <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent"></div>
 
         <div className="absolute bottom-0 left-0 right-0 pb-16">
-          <div className="max-w-7xl mx-auto px-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-8">
             <Link to="/catalog" className="inline-flex items-center gap-2 text-on-surface-variant hover:text-primary transition-all font-bold text-sm mb-6 group">
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Catalog
             </Link>
@@ -251,7 +251,7 @@ export default function CourseDetail() {
               )}
             </div>
 
-            <h1 className="text-4xl lg:text-6xl font-headline font-extrabold text-primary mb-4 tracking-tighter leading-[1.1] max-w-3xl">
+            <h1 className="text-2xl sm:text-4xl lg:text-6xl font-headline font-extrabold text-primary mb-4 tracking-tighter leading-[1.1] max-w-3xl">
               {course.title}
             </h1>
             <p className="text-lg text-on-surface-variant leading-relaxed font-medium max-w-2xl">
@@ -262,7 +262,7 @@ export default function CourseDetail() {
       </section>
 
       {/* Main Content & Sidebar */}
-      <div className="max-w-7xl mx-auto px-8 py-12">
+      <div className="max-w-7xl mx-auto px-3 sm:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Main Content */}
           <div className="lg:col-span-8 space-y-10">
