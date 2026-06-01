@@ -107,7 +107,7 @@ export default function AboutUs() {
               {[
                 { title: "Innovation at Core", desc: "We constantly evolve with the latest in edtech and generative AI." },
                 { title: "User-Centric Design", desc: "Built for simplicity, speed, and scalability." },
-                { title: "Trusted Leadership", desc: "Guided by Devika Parkuthi’s vision of making technology a bridge to better education." }
+                { title: "Trusted Leadership", desc: "Guided by Devika Pakruthi's vision of making technology a bridge to better education." }
               ].map((item, idx) => (
                 <div key={idx} className="bg-surface-container-lowest p-5 rounded-2xl border border-surface-dim/20 ambient-shadow hover:border-primary/30 transition-all">
                   <ShieldCheck className="w-6 h-6 text-primary mb-3" />
