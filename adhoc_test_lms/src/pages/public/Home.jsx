@@ -1,26 +1,24 @@
-// src/pages/public/Home.jsx
 import * as React from "react"
 import { Link } from "react-router-dom"
 import {
   ArrowRight,
   Play,
-  ShieldCheck,
   Star,
   Brain,
-  History,
-  Globe,
-  Award,
   TrendingUp,
   Users,
-  Video,
-  Clock,
-  Sparkles,
-  ChevronRight,
-  Loader2
+  Video
 } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { StorageService } from "../../services/storage"
 import { api } from "../../services/api"
+
+const PhilosophySection = React.lazy(() => import("../../components/home/PhilosophySection"))
+const FeaturedCoursesSection = React.lazy(() => import("../../components/home/FeaturedCoursesSection"))
+const BentoFeaturesSection = React.lazy(() => import("../../components/home/BentoFeaturesSection"))
+const TestimonialsSection = React.lazy(() => import("../../components/home/TestimonialsSection"))
+const CeoMessageSection = React.lazy(() => import("../../components/home/CeoMessageSection"))
+const CtaSection = React.lazy(() => import("../../components/home/CtaSection"))
 
 // Animation variants
 const fadeUp = {
@@ -257,264 +255,14 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Philosophy Section */}
-      <section id="about" className="py-12 sm:py-16 px-3 sm:px-8 bg-surface-container-lowest border-y border-surface-dim/10">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-          <div className="lg:w-1/2 space-y-8">
-            <h2 className="text-2xl sm:text-4xl font-headline font-bold text-primary">Academic Authority, Digital Speed - Now for the Enterprise</h2>
-            <p className="text-secondary text-lg leading-relaxed">
-              The traditional classroom just got an upgrade. We’ve built a high-speed learning environment that cuts through the noise. With clean typography and a distraction-free layout, mastering complex material has never been more efficient. Your path to industry-recognized certification starts here.
-            </p>
-            <ul className="space-y-4">
-              {[
-                "150+ Expert Mentors from Global Firms",
-                "Certifications recognized across the tech industry",
-                 "Limited-time access to premium course assets", 
-                "24/7 Mentor Support & Community Access"
-              ].map((text, i) => (
-                <li key={i} className="flex items-center gap-3 text-on-surface font-medium group">
-                  <ShieldCheck className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
-                  {text}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="lg:w-1/2 grid grid-cols-2 gap-4 w-full">
-            <div className="h-48 sm:h-64 rounded-3xl bg-surface-container overflow-hidden hover:scale-105 transition-transform duration-500">
-              <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=80&fm=webp" width="300" height="256" className="w-full h-full object-cover" alt="Campus Life" loading="lazy" />
-            </div>
-            <div className="h-56 sm:h-72 mt-8 sm:mt-12 rounded-3xl bg-surface-container overflow-hidden hover:scale-105 transition-transform duration-500">
-              <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=80&fm=webp" width="300" height="288" className="w-full h-full object-cover" alt="Study" loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Courses Section (NEW) */}
-      <section id="courses" className="py-16 px-3 sm:px-8 bg-surface">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16 text-center max-w-2xl mx-auto">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-xs uppercase tracking-widest mb-4">
-              Featured Curriculum
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-headline font-bold text-primary mb-4">Most Popular Pathways</h2>
-            <p className="text-secondary">Join thousands of professionals accelerating their careers with our flagship programs.</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {coursesLoading ? (
-              <div className="col-span-full flex justify-center py-12">
-                <Loader2 className="w-8 h-8 text-primary animate-spin" />
-              </div>
-            ) : featuredCourses.length > 0 ? (
-              featuredCourses.map((course, idx) => (
-                <div
-                  key={idx}
-                  onMouseEnter={() => setHoveredCard(idx)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                  className="bg-surface-container-lowest rounded-2xl p-6 border border-surface-dim/20 hover:border-primary/30 transition-all hover:shadow-xl group"
-                >
-
-                  <div className="flex justify-between items-start mb-4">
-                    <Sparkles className="w-8 h-8 text-primary" />
-                    <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-full capitalize">
-                      {course.level}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-headline font-bold text-on-surface group-hover:text-primary transition-colors mb-2 line-clamp-1">{course.title}</h3>
-                  <div className="flex justify-between items-center text-sm text-secondary mb-4">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> {course.duration} Hours
-                    </span>
-                  </div>
-                  <Link
-                    to={`/course/${course.id}`}
-                    aria-label={`Learn more about ${course.title}`}
-                    className="inline-flex items-center gap-2 text-primary font-medium text-sm group-hover:gap-3 transition-all"
-                  >
-                    Learn More <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-12 text-secondary">
-                No courses available at the moment.
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Bento Grid Features (Enhanced) */}
-      <section className="py-16 px-3 sm:px-8 bg-surface-container-lowest">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16 text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-4xl font-headline font-bold text-primary mb-4">The Editorial Experience</h2>
-            <p className="text-secondary">Designed for professionals who demand high-end interfaces and unparalleled curriculum depth.</p>
-          </div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch"
-          >
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-col h-full p-6 rounded-xl border border-outline-variant bg-surface-container-low dark:bg-surface-container-high transition-colors group"
-            >
-              <Award className="w-12 h-12 text-primary mb-6 group-hover:scale-110 transition-transform" />
-              <h3 className="text-2xl font-headline font-bold mb-2">Industry Accreditation</h3>
-              <p className="text-secondary flex-grow">Our certs are designed directly with enterprise CTOs, providing immediate professional legitimacy.</p>
-              <div className="mt-6 flex items-center gap-2 text-primary text-sm font-medium">
-                Recognized by 500+ companies
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-col h-full p-6 rounded-xl border border-outline-variant bg-surface-container-low dark:bg-surface-container-high transition-colors group"
-            >
-              <Brain className="w-12 h-12 text-primary mb-6 group-hover:scale-110 transition-transform" />
-              <h3 className="text-2xl font-headline font-bold mb-2">Expert Focus</h3>
-              <p className="text-secondary flex-grow">Mentors leading deep technical pathways from FAANG and Fortune 500.</p>
-            </motion.div>
-            
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-col h-full p-6 rounded-xl border border-outline-variant bg-surface-container-low dark:bg-surface-container-high transition-colors group"
-            >
-              <History className="w-10 h-10 text-primary mb-6 group-hover:scale-110 transition-transform" />
-              <h3 className="text-2xl font-headline font-bold mb-2">Limited time Access</h3>
-              <p className="text-secondary flex-grow">Purchase once, review forever. All future updates included.</p>
-            </motion.div>
-
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-col h-full p-6 rounded-xl border border-outline-variant bg-surface-container-low dark:bg-surface-container-high transition-colors group"
-            >
-              <Globe className="w-10 h-10 text-primary mb-6 group-hover:scale-110 transition-transform" />
-              <h3 className="text-2xl font-headline font-bold mb-2">Global Network</h3>
-              <p className="text-secondary flex-grow">Join 45k+ alumni worldwide across 80+ countries.</p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Testimonials Section (NEW) */}
-      <section id="testimonials" className="py-16 px-3 sm:px-8 bg-surface">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-16 text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-4xl font-headline font-bold text-primary mb-4">What Our Learners Say</h2>
-            <p className="text-secondary">Trusted by professionals from leading companies worldwide.</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, idx) => (
-              <div
-                key={idx}
-                className="bg-surface-container-lowest rounded-2xl p-6 border border-surface-dim/20 hover:border-primary/20 transition-all"
-              >
-                <div className="flex text-amber-400 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
-                </div>
-                <p className="text-on-surface mb-6 leading-relaxed">"{testimonial.content}"</p>
-                <div className="flex items-center gap-3">
-                  <img
-                    src={testimonial.user?.avatar || `https://i.pravatar.cc/96?u=${testimonial.id || testimonial.user?.name}`}
-                    alt={testimonial.user?.name || "User"}
-                    width="40"
-                    height="40"
-                    className="w-10 h-10 rounded-full object-cover"
-                    loading="lazy"
-                  />
-                  <div>
-                    <p className="font-bold text-sm">{testimonial.user?.name || "Unknown User"}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Message from the CEO Section */}
-      <section className="py-4 px-3 sm:px-8 bg-surface">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-surface-container-lowest rounded-[2rem] p-6 sm:p-10 flex flex-col lg:flex-row items-center lg:items-start gap-12 border border-surface-dim/20"
-          >
-            {/* CEO Image */}
-            <div className="w-full lg:w-1/3 max-w-[380px]">
-              <div className="rounded-3xl overflow-hidden shadow-2xl border border-surface-dim/20 bg-surface-container-low">
-                <picture>
-                  <source srcset="/ceo-mobile.webp" media="(max-width: 640px)" />
-                  <img
-                    src="/ceo-profile.webp"
-                    alt="Devika Pakruthi - CEO"
-                    width="380"
-                    height="400"
-                    className="w-full h-auto max-h-[400px] object-contain"
-                  />
-                </picture>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="lg:w-3/4 text-on-surface space-y-4">
-              <h2 className="text-2xl font-headline font-bold text-on-surface mb-2">Message from the CEO</h2>
-              <div className="space-y-3 text-on-surface leading-relaxed text-base">
-                <p>
-                  <span className="font-bold text-on-surface">ADHOC NETWORK TECH LMS</span> is dedicated to providing a comprehensive educational ecosystem featuring high-demand, trending courses—from intelligent data insights to next-generation AI innovations, shaping smarter learning experiences. We meticulously design each course to bridge the gap between academic theory and real-world, practical experience.
-                </p>
-                <p>
-                  It gives us great joy to see our students learn the various components of professional tools to prepare them for the future. We offer a full range of trending technology courses.
-                </p>
-                <p>
-                  This empowers students to learn the skills needed to succeed in the global IT domain.
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-surface-dim/20 flex justify-between items-center">
-                <div>
-                  <p className="text-xl font-bold text-on-surface">Devika Pakruthi</p>
-                  <p className="text-secondary font-medium">Chief Executive Officer</p>
-                  <p className="text-primary text-sm font-bold uppercase tracking-wider">ADHOC NETWORK TECH</p>
-                </div>
-                <Link
-                  to="/about-us"
-                  className="px-6 py-2 bg-primary text-on-primary rounded-xl font-bold text-sm hover:scale-105 transition-transform shadow-lg whitespace-nowrap"
-                >
-                  About Us
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Section (NEW) */}
-      <section className="py-12 px-3 sm:px-8 signature-gradient">
-        <div className="max-w-4xl mx-auto text-center text-white">
-          <h2 className="text-2xl sm:text-4xl font-headline font-bold mb-4">Ready to Elevate Your Career?</h2>
-          <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-             Join an exclusive community of professionals transforming their careers with our premium courses.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/catalog"
-              className="px-8 py-3 border-2 border-white/30 bg-primary text-on-primary rounded-xl font-bold hover:scale-105 transition-transform shadow-lg"
-            >
-              Browse All Courses
-            </Link>
-          </div>
-          <p className="text-xs opacity-70 mt-6">No credit card required • Cancel anytime</p>
-        </div>
-      </section>
+      <React.Suspense fallback={null}>
+        <PhilosophySection />
+        <FeaturedCoursesSection featuredCourses={featuredCourses} coursesLoading={coursesLoading} />
+        <BentoFeaturesSection />
+        <TestimonialsSection testimonials={testimonials} />
+        <CeoMessageSection />
+        <CtaSection />
+      </React.Suspense>
     </div>
   )
 }
