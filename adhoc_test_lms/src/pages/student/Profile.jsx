@@ -127,14 +127,14 @@ function ProfileContent() {
     <main className="min-h-screen bg-surface relative overflow-hidden pt-8 pb-24">
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="relative max-w-6xl mx-auto px-6 text-on-surface">
+      <div className="relative max-w-6xl mx-auto px-3 sm:px-6 text-on-surface">
         <div className="mb-10 border-b border-surface-dim pb-8">
           <h1 className="font-headline text-4xl font-extrabold mb-2 text-primary">My Account</h1>
           <p className="text-secondary text-lg">Manage your credentials and platform preferences.</p>
         </div>
 
         {/* User Stats Card */}
-        <section className="mb-12 bg-surface-container-low border border-surface-dim rounded-[2.5rem] p-10 ambient-shadow flex flex-col md:flex-row items-center gap-8">
+        <section className="mb-12 bg-surface-container-low border border-surface-dim rounded-[2.5rem] p-4 sm:p-10 ambient-shadow flex flex-col md:flex-row items-center gap-8">
           <div className="w-24 h-24 bg-primary text-on-primary rounded-full flex items-center justify-center text-4xl font-headline font-bold">
             {user.name.substring(0, 2).toUpperCase()}
           </div>
@@ -260,7 +260,7 @@ function ProfileContent() {
           {/* LEFT COLUMN: Security and Platform Preferences */}
           <div className="flex flex-col gap-8">
             {/* Security Settings */}
-            <div className="bg-surface-container-lowest border border-surface-dim rounded-[2rem] p-8 ambient-shadow">
+            <div className="bg-surface-container-lowest border border-surface-dim rounded-[2rem] p-4 sm:p-8 ambient-shadow">
               <div className="flex items-center gap-3 mb-8">
                 <div className="p-3 bg-surface-container-low rounded-xl text-primary"><Shield className="w-6 h-6" /></div>
                 <h3 className="text-xl font-headline font-bold text-primary">Security Settings</h3>
@@ -291,7 +291,7 @@ function ProfileContent() {
             </div>
 
             {/* Platform Preferences */}
-            <div className="bg-surface-container-lowest border border-surface-dim rounded-[2rem] p-8 ambient-shadow">
+            <div className="bg-surface-container-lowest border border-surface-dim rounded-[2rem] p-4 sm:p-8 ambient-shadow">
               <div className="flex items-center gap-3 mb-8">
                 <div className="p-3 bg-surface-container-low rounded-xl text-primary"><Bell className="w-6 h-6" /></div>
                 <h3 className="text-xl font-headline font-bold text-primary">Platform Preferences</h3>
@@ -311,7 +311,7 @@ function ProfileContent() {
           {/* RIGHT COLUMN: Referral Program */}
           <div className="flex flex-col gap-8">
             {enrollments.length > 0 && user.referralCode && (
-              <div className="bg-surface-container-lowest border border-surface-dim rounded-[2rem] p-8 ambient-shadow relative overflow-hidden">
+              <div className="bg-surface-container-lowest border border-surface-dim rounded-[2rem] p-4 sm:p-8 ambient-shadow relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] pointer-events-none" />
                 <div className="flex items-center gap-3 mb-6 relative z-10">
                   <div className="p-3 bg-primary/10 rounded-xl text-primary"><Gift className="w-6 h-6" /></div>
