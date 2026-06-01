@@ -46,7 +46,7 @@ export function Footer() {
               </div>
               <span className="text-lg sm:text-xl font-headline font-bold tracking-tighter text-primary">Adhoc Network Tech</span>
             </Link>
-            <p className="text-on-surface-variant text-sm font-medium leading-relaxed max-w-sm mb-8 opacity-70 italic">
+            <p className="text-[#1a1a1a] dark:text-white/80 text-sm font-medium leading-relaxed max-w-sm mb-8 italic">
               Empowering the next generation of academic leaders through sophisticated learning ecosystems and decentralized knowledge protocols.
             </p>
             <div className="flex items-center gap-4">
@@ -72,7 +72,7 @@ export function Footer() {
           {/* Newsletter Signup */}
           <div className="sm:col-span-2 lg:col-span-4">
             <h2 className="text-[10px] sm:text-xs font-bold text-primary uppercase tracking-[0.3em] mb-6 sm:mb-8 italic">Newsletter</h2>
-            <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">
+            <p className="text-sm text-[#1a1a1a] dark:text-white mb-6 leading-relaxed">
               Subscribe to receive tactical insights, curriculum updates, and exclusive content.
             </p>
             <div className="flex flex-col gap-3">
@@ -87,7 +87,7 @@ export function Footer() {
                   Subscribe
                 </button>
               </div>
-              <p className="text-[10px] text-[#17191b]">
+              <p className="text-[10px] text-[#1a1a1a] dark:text-white/60">
                 No spam. Unsubscribe anytime.
               </p>
             </div>
@@ -99,7 +99,7 @@ export function Footer() {
             <ul className="space-y-4 sm:space-y-6">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" strokeWidth={2.5} />
-                <span className="text-sm font-medium text-[#4a4b50] leading-relaxed">
+                <span className="text-sm font-medium text-[#1a1a1a] dark:text-white leading-relaxed">
                   Adhoc Network <br />
                   Sunrise Towers, 1st floor, IT Sez, Hill-03, Rushikonda <br />
                   Visakhapatnam, Andhra Pradesh, India - 530048
@@ -107,11 +107,11 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary shrink-0" strokeWidth={2.5} />
-                <span className="text-sm font-medium text-[#4a4b50]">+91 7815823764</span>
+                <span className="text-sm font-medium text-[#1a1a1a] dark:text-white">+91 7815823764</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary shrink-0" strokeWidth={2.5} />
-                <span className="text-sm font-medium text-[#4a4b50]">hr@adhocnetwork.tech</span>
+                <span className="text-sm font-medium text-[#1a1a1a] dark:text-white">hr@adhocnetwork.tech</span>
               </li>
             </ul>
           </div>
@@ -121,7 +121,7 @@ export function Footer() {
         <div className="pt-8 pb-6 border-t border-surface-dim/20">
           <div className="flex flex-nowrap justify-center gap-2 md:gap-6 mb-6 whitespace-nowrap text-[8px] sm:text-[10px]">
             {links.legal.map(link => (
-              <Link key={link.name} to={link.href} className="text-sm text-on-surface-variant hover:text-primary transition-colors">
+              <Link key={link.name} to={link.href} className="text-sm text-[#1a1a1a] dark:text-white/80 hover:text-primary dark:hover:text-white transition-colors">
                 {link.name}
               </Link>
             ))}
@@ -130,9 +130,9 @@ export function Footer() {
 
         {/* Bottom Shard */}
         <div className="pt-4 border-t border-surface-dim/20 flex flex-col lg:flex-row justify-between items-center gap-6">
-          <p className="text-[10px] sm:text-xs font-bold text-[#17191b] uppercase tracking-widest text-center  lg:text-left">
-            &copy; {currentYear} Adhoc Network Tech.
-          </p>
+            <p className="text-[10px] sm:text-xs font-bold text-[#1a1a1a] dark:text-white uppercase tracking-widest text-center  lg:text-left">
+              &copy; {currentYear} Adhoc Network Tech.
+            </p>
         </div>
       </div>
     </footer>

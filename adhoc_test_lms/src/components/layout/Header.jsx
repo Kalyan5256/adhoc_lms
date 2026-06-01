@@ -27,7 +27,7 @@ const DROPDOWN_ITEMS = [
   { href: "/my-courses", label: "My Courses", icon: BookOpen },
   { href: "/certificates", label: "Certificates", icon: Award },
   { href: "/my-doubts", label: "My Doubts", icon: MessageCircle },
-  { href: "/settings", label: "Settings", icon: Settings },
+  // { href: "/settings", label: "Settings", icon: Settings },
   { href: "/referral", label: "Refer & Earn", icon: Gift },
   { href: "/feedback", label: "Feedback", icon: MessageCircle },
 ]
@@ -243,9 +243,9 @@ export function Header() {
               </Link>
             ))}
               
-              <Link to="/settings" className="rounded-md px-3 py-2 text-sm font-medium text-on-surface hover:bg-surface-dim" onClick={() => setIsOpen(false)}>
+              {/* <Link to="/settings" className="rounded-md px-3 py-2 text-sm font-medium text-on-surface hover:bg-surface-dim" onClick={() => setIsOpen(false)}>
                 Settings
-              </Link>
+              </Link> */}
               <Link to="/referral" className="rounded-md px-3 py-2 text-sm font-medium text-on-surface hover:bg-surface-dim" onClick={() => setIsOpen(false)}>
                 Refer & Earn
               </Link>

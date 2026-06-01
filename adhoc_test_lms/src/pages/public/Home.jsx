@@ -201,6 +201,8 @@ export default function Home() {
                   <img
                     key={i}
                     src={`https://i.pravatar.cc/300?img=${i + 10}`}
+                    width="40"
+                    height="40"
                     className="w-10 h-10 rounded-full border-2 border-surface shadow-sm object-cover"
                     alt="Learner"
                     loading="lazy"
@@ -226,8 +228,12 @@ export default function Home() {
             <div className="relative rounded-3xl overflow-hidden h-[300px] sm:h-[400px] lg:h-[500px]">
               <img
                 alt="Students Learning"
+                width="600"
+                height="500"
                 className="w-full h-full object-cover"
-                src="https://images.unsplash.com/photo-1629904853716-f0bc54eea481?w=3840&q=100&fm=jpg&crop=entropy&cs=tinysrgb&fit=max"
+                src="https://images.unsplash.com/photo-1629904853716-f0bc54eea481?w=1200&q=80&fm=webp&crop=entropy&cs=tinysrgb&fit=max"
+                srcset="https://images.unsplash.com/photo-1629904853716-f0bc54eea481?w=600&q=80&fm=webp&crop=entropy&cs=tinysrgb&fit=max 600w, https://images.unsplash.com/photo-1629904853716-f0bc54eea481?w=1200&q=80&fm=webp&crop=entropy&cs=tinysrgb&fit=max 1200w"
+                sizes="(max-width: 600px) 100vw, 50vw"
                 fetchpriority="high"
                 loading="eager"
               />
@@ -279,10 +285,10 @@ export default function Home() {
           </div>
           <div className="lg:w-1/2 grid grid-cols-2 gap-4 w-full">
             <div className="h-48 sm:h-64 rounded-3xl bg-surface-container overflow-hidden hover:scale-105 transition-transform duration-500">
-              <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=2560&auto=format&fit=crop&q=100" className="w-full h-full object-cover" alt="Campus Life" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=80&fm=webp" width="300" height="256" className="w-full h-full object-cover" alt="Campus Life" loading="lazy" />
             </div>
             <div className="h-56 sm:h-72 mt-8 sm:mt-12 rounded-3xl bg-surface-container overflow-hidden hover:scale-105 transition-transform duration-500">
-              <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=2560&auto=format&fit=crop&q=100" className="w-full h-full object-cover" alt="Study" loading="lazy" />
+              <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=80&fm=webp" width="300" height="288" className="w-full h-full object-cover" alt="Study" loading="lazy" />
             </div>
           </div>
         </div>
@@ -421,6 +427,8 @@ export default function Home() {
                   <img
                     src={testimonial.user?.avatar || `https://i.pravatar.cc/150?u=${testimonial.id || testimonial.user?.name}`}
                     alt={testimonial.user?.name || "User"}
+                    width="40"
+                    height="40"
                     className="w-10 h-10 rounded-full object-cover"
                     loading="lazy"
                   />
@@ -454,8 +462,10 @@ export default function Home() {
             <div className="w-full lg:w-1/3 max-w-[380px]">
               <div className="rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
                 <img
-                  src="https://github.com/saiakhil1629/ascs_bootcamp/blob/main/WhatsApp%20Image%202026-05-17%20at%2011.16.33%20AM.jpeg?raw=true"
+                  src="/ceo-profile.jpg"
                   alt="Devika Pakruthi - CEO"
+                  width="380"
+                  height="400"
                   className="w-full h-auto max-h-[400px] object-contain"
                 />
               </div>
