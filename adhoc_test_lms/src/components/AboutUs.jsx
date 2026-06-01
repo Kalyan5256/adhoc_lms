@@ -57,12 +57,10 @@ export default function AboutUs() {
             </motion.div>
 
             {/* Our Mission */}
-            <motion.div variants={fadeUp} className="space-y-4 bg-surface-container-low p-6 rounded-2xl border border-surface-dim/20">
-              <div className="flex items-center gap-3">
-                <Target className="w-6 h-6 text-primary" />
-                <h3 className="text-2xl font-headline font-bold text-primary">Our Mission</h3>
-              </div>
-              <p className="text-secondary leading-relaxed">
+            <motion.div variants={fadeUp} className="space-y-4 bg-primary text-on-primary p-8 rounded-[2rem] shadow-xl ambient-shadow relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+              <h3 className="text-2xl font-headline font-bold relative z-10">Our Mission</h3>
+              <p className="opacity-90 leading-relaxed text-lg relative z-10">
                 To deliver innovative technology solutions, industry-relevant training, internships, and experiential learning opportunities that enhance skills, foster innovation, and prepare learners for successful careers.
               </p>
             </motion.div>
