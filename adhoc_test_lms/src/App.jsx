@@ -244,7 +244,7 @@ function App() {
               <Route path="*" element={<Navigate to="/404" replace />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
-              <Route path="RefundPolicy" element={<RefundPolicy />} />
+              <Route path="/RefundPolicy" element={<RefundPolicy />} />
               <Route path="/about-us" element={<AboutUs />} />
             </Routes>
           </main>
