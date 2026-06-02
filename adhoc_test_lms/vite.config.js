@@ -8,6 +8,17 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    {
+      name: 'reorder-css',
+      transformIndexHtml(html) {
+        const cssRegex = /<link rel="stylesheet" crossorigin href="([^"]+)">/g;
+        const match = cssRegex.exec(html);
+        if (!match) return html;
+        const cssLink = match[0];
+        let cleanHtml = html.replace(cssLink, '');
+        return cleanHtml.replace('<head>', `<head>\n    ${cssLink}`);
+      }
+    }
   ],
   resolve: {
     alias: {
