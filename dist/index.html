@@ -35,6 +35,30 @@
     
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; height: 100vh; background-color: #000108; color: #f7f9fc; font-family: 'Inter', sans-serif; overflow: hidden; margin: 0; padding: 0;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px; animation: adhoc-pulse 2s infinite ease-in-out;">
+          <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0052cc 0%, #00a3ff 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0, 82, 204, 0.3);">
+            <span style="color: white; font-weight: bold; font-size: 20px;">A</span>
+          </div>
+          <span style="font-weight: bold; font-size: 20px; letter-spacing: -0.02em;">Adhoc Network Tech</span>
+        </div>
+        <div style="width: 24px; height: 24px; border: 3px solid rgba(247, 249, 252, 0.15); border-top-color: #00a3ff; border-radius: 50%; animation: adhoc-spin 1s linear infinite;"></div>
+      </div>
+      <style>
+        @keyframes adhoc-spin {
+          to { transform: rotate(360deg); }
+        }
+        @keyframes adhoc-pulse {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 1; }
+        }
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: #000108;
+        }
+      </style>
+    </div>
   </body>
 </html>
