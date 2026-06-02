@@ -158,12 +158,9 @@ export default function Home() {
 
   return (
     <div className="bg-surface text-on-surface">
-      {/* Hero Section with Animation */}
-      <motion.section
+      {/* Hero Section with Immediate Paint */}
+      <section
         ref={heroRef}
-        initial="hidden"
-        animate={isHeroInView ? "visible" : "hidden"}
-        variants={fadeUp}
         className="relative overflow-hidden py-12 px-4 sm:px-8 lg:py-20"
       >
         {/* Background Gradient */}
@@ -176,34 +173,19 @@ export default function Home() {
               Learn Any Thing And Any Where
             </span>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-3xl sm:text-5xl lg:text-7xl font-headline font-extrabold text-primary tracking-tight leading-[1.1]"
-            >
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-headline font-extrabold text-primary tracking-tight leading-[1.1]">
               Elevate Your <br />
               <span className="opacity-80 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                 Learning Journey
               </span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-lg text-secondary font-medium max-w-lg leading-relaxed"
-            >
+            <p className="text-lg text-secondary font-medium max-w-lg leading-relaxed">
               Access premium courses designed by industry experts. Experience a
               sophisticated curriculum structured for modern professionals.
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-4 pt-4"
-            >
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Link
                 to="/catalog"
                 className="px-16 py-5 border-2 border-white bg-primary text-on-primary rounded-xl font-bold hover:scale-105 transition-transform ambient-shadow flex items-center justify-center gap-2 group"
@@ -211,22 +193,10 @@ export default function Home() {
                 Explore Courses
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              {/* <Link
-                to="/catalog"
-                className="px-8 py-4 border border-primary/30 text-primary rounded-xl font-bold hover:bg-primary/5 transition-all flex items-center justify-center gap-2 group"
-              >
-                <Play className="w-5 h-5" />
-                Watch Demo
-              </Link> */}
-            </motion.div>
+            </div>
 
             {/* Stats Row */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-wrap gap-6 pt-4"
-            >
+            <div className="flex flex-wrap gap-6 pt-4">
               {stats.map((stat, idx) => (
                 <div key={idx} className="flex items-center gap-3">
                   <stat.icon className="w-5 h-5 text-primary/60" />
@@ -240,15 +210,10 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-            </motion.div>
+            </div>
 
             {/* Social Proof */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex items-center gap-4 pt-4"
-            >
+            <div className="flex items-center gap-4 pt-4">
               <div className="flex -space-x-3">
                 {[1, 2, 3, 4].map((i) => (
                   <img
@@ -273,8 +238,9 @@ export default function Home() {
                   Rated 4.9/5 by 12,000+ professionals
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
+
 
           {/* Hero Image Card */}
           <motion.div
@@ -327,7 +293,7 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
 
       <PhilosophySection />
       <FeaturedCoursesSection
