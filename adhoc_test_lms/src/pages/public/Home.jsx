@@ -48,33 +48,58 @@ export default function Home() {
   ]
 
   // Testimonials state
-  const [testimonials, setTestimonials] = React.useState([
-    {
-      user: { name: "Dr. Sarah Chen", role: "CTO, TechForward", avatar: "https://i.pravatar.cc/50?img=1" },
-      content: "The curriculum depth and production quality are unmatched. This platform accelerated our team's upskilling by 3x.",
-      rating: 5,
-    },
-    {
-      user: { name: "Michael Rodriguez", role: "Lead Architect", avatar: "https://i.pravatar.cc/50?img=2" },
-      content: "Finally, a learning platform that respects design sophistication. The bento layout makes discovery effortless.",
-      rating: 5,
-    },
-    {
-      user: { name: "Priya Sharma", role: "Product Manager", avatar: "https://i.pravatar.cc/50?img=3" },
-      content: "The certification helped me transition into a leadership role. Highly recommend for serious professionals.",
-      rating: 5,
-    }
-  ])
+  const [testimonials, setTestimonials] = React.useState([])
+  const [testimonialsLoading, setTestimonialsLoading] = React.useState(true)
 
   React.useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
+        setTestimonialsLoading(true)
         const res = await api.feedbacks.getHome()
         if (res.success && res.data && res.data.length > 0) {
-          setTestimonials(res.data)
+          setTestimonials(res.data.slice(0, 3))
+        } else {
+          // Default fallbacks if empty
+          setTestimonials([
+            {
+              user: { name: "Dr. Sarah Chen", role: "CTO, TechForward", avatar: "https://i.pravatar.cc/50?img=1" },
+              content: "The curriculum depth and production quality are unmatched. This platform accelerated our team's upskilling by 3x.",
+              rating: 5,
+            },
+            {
+              user: { name: "Michael Rodriguez", role: "Lead Architect", avatar: "https://i.pravatar.cc/50?img=2" },
+              content: "Finally, a learning platform that respects design sophistication. The bento layout makes discovery effortless.",
+              rating: 5,
+            },
+            {
+              user: { name: "Priya Sharma", role: "Product Manager", avatar: "https://i.pravatar.cc/50?img=3" },
+              content: "The certification helped me transition into a leadership role. Highly recommend for serious professionals.",
+              rating: 5,
+            }
+          ])
         }
       } catch (err) {
         console.error("Failed to fetch home feedbacks:", err)
+        // Default fallbacks on error
+        setTestimonials([
+          {
+            user: { name: "Dr. Sarah Chen", role: "CTO, TechForward", avatar: "https://i.pravatar.cc/50?img=1" },
+            content: "The curriculum depth and production quality are unmatched. This platform accelerated our team's upskilling by 3x.",
+            rating: 5,
+          },
+          {
+            user: { name: "Michael Rodriguez", role: "Lead Architect", avatar: "https://i.pravatar.cc/50?img=2" },
+            content: "Finally, a learning platform that respects design sophistication. The bento layout makes discovery effortless.",
+            rating: 5,
+          },
+          {
+            user: { name: "Priya Sharma", role: "Product Manager", avatar: "https://i.pravatar.cc/50?img=3" },
+            content: "The certification helped me transition into a leadership role. Highly recommend for serious professionals.",
+            rating: 5,
+          }
+        ])
+      } finally {
+        setTestimonialsLoading(false)
       }
     }
     fetchFeedbacks()
@@ -259,7 +284,7 @@ export default function Home() {
       <PhilosophySection />
       <FeaturedCoursesSection featuredCourses={featuredCourses} coursesLoading={coursesLoading} />
       <BentoFeaturesSection />
-      <TestimonialsSection testimonials={testimonials} />
+      <TestimonialsSection testimonials={testimonials} testimonialsLoading={testimonialsLoading} />
       <CeoMessageSection />
       <CtaSection />
     </div>
