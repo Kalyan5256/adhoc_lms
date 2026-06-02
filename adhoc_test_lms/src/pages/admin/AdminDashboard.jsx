@@ -151,7 +151,7 @@ function AdminDashboardContent() {
               <div className="flex justify-between items-center mb-10 relative z-10">
                 <h3 className="text-2xl font-headline font-bold text-primary italic flex items-center gap-3">
                   <BarChart3 className="w-6 h-6" />
-                  Enrollment Velocity
+                  Revenue Velocity
                 </h3>
                 <div className="flex gap-2">
                   {['Weekly', 'Monthly', 'Yearly'].map(p => (
