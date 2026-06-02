@@ -8,9 +8,9 @@ import Privacy from "./components/Privacy"
 import RefundPolicy from "./components/RefundPolicy";
 import { Footer } from './components/layout/Footer'
 import { BottomNav } from './components/layout/BottomNav'
+import Home from './pages/public/Home'
 
 // Lazy Pages
-const Home = React.lazy(() => import('./pages/public/Home'))
 const Catalog = React.lazy(() => import('./pages/public/Catalog'))
 const Login = React.lazy(() => import('./pages/auth/Login'))
 const Register = React.lazy(() => import('./pages/auth/Register'))
