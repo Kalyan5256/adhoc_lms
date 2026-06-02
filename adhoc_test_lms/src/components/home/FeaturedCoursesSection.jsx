@@ -18,9 +18,22 @@ export default function FeaturedCoursesSection({ featuredCourses, coursesLoading
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {coursesLoading ? (
-            <div className="col-span-full flex justify-center py-12">
-              <Loader2 className="w-8 h-8 text-primary animate-spin" />
-            </div>
+            Array.from({ length: 3 }).map((_, idx) => (
+              <div
+                key={idx}
+                className="bg-surface-container-lowest rounded-2xl p-6 border border-surface-dim/20 animate-pulse min-h-[190px] flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="w-8 h-8 bg-surface-dim/20 rounded-lg"></div>
+                    <div className="w-16 h-5 bg-surface-dim/20 rounded-full"></div>
+                  </div>
+                  <div className="h-6 bg-surface-dim/20 rounded-md w-3/4 mb-4"></div>
+                  <div className="h-4 bg-surface-dim/20 rounded-md w-1/4 mb-6"></div>
+                </div>
+                <div className="h-4 bg-surface-dim/20 rounded-md w-1/2"></div>
+              </div>
+            ))
           ) : featuredCourses.length > 0 ? (
             featuredCourses.map((course, idx) => (
               <div

@@ -27,9 +27,9 @@ export default function PhilosophySection() {
         <div className="lg:w-1/2 grid grid-cols-2 gap-4 w-full">
           <div className="h-48 sm:h-64 rounded-3xl bg-surface-container overflow-hidden hover:scale-105 transition-transform duration-500">
             <img 
-              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=60&fm=webp" 
-              srcSet="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=60&fm=webp 400w, https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=60&fm=webp 600w"
-              sizes="(max-width: 640px) 400px, 600px"
+              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=50&fm=webp" 
+              srcSet="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=300&auto=format&fit=crop&q=50&fm=webp 300w, https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=50&fm=webp 400w"
+              sizes="(max-width: 640px) 300px, 400px"
               width="300" 
               height="256" 
               className="w-full h-full object-cover" 
@@ -39,9 +39,9 @@ export default function PhilosophySection() {
           </div>
           <div className="h-56 sm:h-72 mt-8 sm:mt-12 rounded-3xl bg-surface-container overflow-hidden hover:scale-105 transition-transform duration-500">
             <img 
-              src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=60&fm=webp" 
-              srcSet="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=60&fm=webp 400w, https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=60&fm=webp 600w"
-              sizes="(max-width: 640px) 400px, 600px"
+              src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=50&fm=webp" 
+              srcSet="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&auto=format&fit=crop&q=50&fm=webp 300w, https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=50&fm=webp 400w"
+              sizes="(max-width: 640px) 300px, 400px"
               width="300" 
               height="288" 
               className="w-full h-full object-cover" 
