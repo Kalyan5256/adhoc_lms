@@ -129,13 +129,14 @@ function DashboardContent() {
         if (quizRes && quizRes.success) {
           const quizActivities = (quizRes.data || []).map(attempt => {
             const dateObj = new Date(attempt.createdAt);
+            const percentage = attempt.percentage !== undefined ? attempt.percentage : attempt.score;
             return {
               id: `quiz-${attempt.id}`,
               type: 'scored',
-              course: `${Math.round(attempt.score)}% in ${attempt.Quiz?.title || "Quiz"} (${attempt.Quiz?.Course?.title || ""})`,
+              course: `${Math.round(percentage)}% in ${attempt.quiz?.title || "Quiz"} (${attempt.quiz?.course?.title || ""})`,
               date: dateObj.toLocaleDateString(),
               timestamp: dateObj.getTime(),
-              points: Math.round(attempt.score),
+              points: Math.round(percentage),
               score: attempt.score
             };
           })
@@ -157,7 +158,7 @@ function DashboardContent() {
             return {
               id: `cert-${cert.id}`,
               type: 'completed',
-              course: `certification in ${cert.Course?.title || "Course"}`,
+              course: `certification in ${cert.course?.title || "Course"}`,
               date: dateObj.toLocaleDateString(),
               timestamp: dateObj.getTime(),
               points: 500
