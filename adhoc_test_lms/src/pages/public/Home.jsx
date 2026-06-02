@@ -13,12 +13,12 @@ import { motion, useInView } from "framer-motion"
 import { StorageService } from "../../services/storage"
 import { api } from "../../services/api"
 
-const PhilosophySection = React.lazy(() => import("../../components/home/PhilosophySection"))
-const FeaturedCoursesSection = React.lazy(() => import("../../components/home/FeaturedCoursesSection"))
-const BentoFeaturesSection = React.lazy(() => import("../../components/home/BentoFeaturesSection"))
-const TestimonialsSection = React.lazy(() => import("../../components/home/TestimonialsSection"))
-const CeoMessageSection = React.lazy(() => import("../../components/home/CeoMessageSection"))
-const CtaSection = React.lazy(() => import("../../components/home/CtaSection"))
+import PhilosophySection from "../../components/home/PhilosophySection"
+import FeaturedCoursesSection from "../../components/home/FeaturedCoursesSection"
+import BentoFeaturesSection from "../../components/home/BentoFeaturesSection"
+import TestimonialsSection from "../../components/home/TestimonialsSection"
+import CeoMessageSection from "../../components/home/CeoMessageSection"
+import CtaSection from "../../components/home/CtaSection"
 
 // Animation variants
 const fadeUp = {
@@ -256,14 +256,12 @@ export default function Home() {
         </div>
       </motion.section>
 
-      <React.Suspense fallback={null}>
-        <PhilosophySection />
-        <FeaturedCoursesSection featuredCourses={featuredCourses} coursesLoading={coursesLoading} />
-        <BentoFeaturesSection />
-        <TestimonialsSection testimonials={testimonials} />
-        <CeoMessageSection />
-        <CtaSection />
-      </React.Suspense>
+      <PhilosophySection />
+      <FeaturedCoursesSection featuredCourses={featuredCourses} coursesLoading={coursesLoading} />
+      <BentoFeaturesSection />
+      <TestimonialsSection testimonials={testimonials} />
+      <CeoMessageSection />
+      <CtaSection />
     </div>
   )
 }

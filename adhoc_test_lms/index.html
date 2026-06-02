@@ -8,10 +8,11 @@
     <link rel="canonical" href="https://adhocnetwork.tech/" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: http: data: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com https://cdn.razorpay.com; script-src-elem 'self' 'unsafe-inline' https://checkout.razorpay.com https://cdn.razorpay.com; img-src 'self' data: https: http:;">
     
-    <!-- Secondary Meta -->
-    <link rel="preconnect" href="https://adhocnetwork.tech" crossorigin>
-    <link rel="dns-prefetch" href="https://adhocnetwork.tech">
-    <link rel="preconnect" href="https://your-api-endpoint.com">
+    <!-- Secondary Meta & Preloading -->
+    <link rel="preload" href="/api/courses" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="/api/feedbacks/home" as="fetch" crossorigin="anonymous">
+    <link rel="preconnect" href="https://checkout.razorpay.com">
+    <link rel="preconnect" href="https://api.razorpay.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
