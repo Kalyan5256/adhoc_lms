@@ -180,6 +180,11 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 500px;
+  }
 }
 
 .safe-bottom {

@@ -129,6 +129,7 @@ export function Header() {
             onClick={handleToggleTheme}
             className="p-2 bg-surface-container-high rounded-full border border-surface-dim hover:bg-surface-dim transition-colors"
             title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
             {theme === "dark" ? <Sun className="h-4 w-4 text-yellow-500" /> : <Moon className="h-4 w-4 text-primary" />}
           </button>
@@ -151,6 +152,7 @@ export function Header() {
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="flex items-center gap-2 p-1 rounded-full hover:bg-surface-container-high transition"
+                  aria-label="User Menu"
                 >
                   <div className="w-9 h-9 bg-primary rounded-full flex items-center justify-center">
                     <span className="text-on-primary text-sm font-bold">
