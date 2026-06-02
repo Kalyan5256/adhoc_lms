@@ -51,11 +51,44 @@ function DashboardContent() {
 
       // Create a map to store course details (durations, etc)
       const courseDetailsMap = {}
+      const activities = []
+
+      // Add Enrolled Courses as activities
+      enrolled.forEach(course => {
+        const rawDate = course.startDate || course.registrationDate || course.enrolledAt || course.subscriptionDate || course.createdAt || Date.now();
+        const dateObj = new Date(rawDate);
+        activities.push({
+          id: `enroll-${course.id}`,
+          type: 'started',
+          course: course.title,
+          date: dateObj.toLocaleDateString(),
+          timestamp: dateObj.getTime()
+        });
+      });
 
       // Load progress and full course data
       const progressPromises = enrolled.map(async (course) => {
         const prog = await StorageService.getProgress(course.id)
         const completedLessonsCount = Object.values(prog).filter(p => p === 'completed').length
+
+        // Fetch detailed lessons with completion timestamps
+        try {
+          const res = await api.progress.getCourseProgress(course.id, token);
+          if (res?.success && res.data?.lessons) {
+            res.data.lessons.filter(l => l.completed).forEach(lesson => {
+              const dateObj = new Date(lesson.completedAt || Date.now());
+              activities.push({
+                id: `lesson-${lesson.id}`,
+                type: 'completed',
+                course: `lesson "${lesson.title}" (${course.title})`,
+                date: dateObj.toLocaleDateString(),
+                timestamp: dateObj.getTime()
+              });
+            });
+          }
+        } catch (err) {
+          console.error("Failed to load detailed lesson progress", err);
+        }
 
         const courseRes = await api.courses.getById(course.id, token)
         const courseData = courseRes?.data || {}
@@ -91,18 +124,22 @@ function DashboardContent() {
       setLearningHours(totalCompletedLessons)
 
       // Fetch Activity: Quiz Attempts
-      const activities = []
       try {
         const quizRes = await api.quizzes.getMyAttempts(token)
         if (quizRes && quizRes.success) {
-          const quizActivities = (quizRes.data || []).slice(0, 3).map(attempt => ({
-            id: `quiz-${attempt.id}`,
-            type: 'scored',
-            course: attempt.Quiz?.title || "Quiz",
-            date: new Date(attempt.createdAt).toLocaleDateString(),
-            points: Math.round(attempt.score),
-            score: attempt.score
-          }))
+          const quizActivities = (quizRes.data || []).map(attempt => {
+            const dateObj = new Date(attempt.createdAt);
+            const percentage = attempt.percentage !== undefined ? attempt.percentage : attempt.score;
+            return {
+              id: `quiz-${attempt.id}`,
+              type: 'scored',
+              course: `${Math.round(percentage)}% in ${attempt.quiz?.title || "Quiz"} (${attempt.quiz?.course?.title || ""})`,
+              date: dateObj.toLocaleDateString(),
+              timestamp: dateObj.getTime(),
+              points: Math.round(percentage),
+              score: attempt.score
+            };
+          })
           activities.push(...quizActivities)
         }
       } catch (err) {
@@ -116,20 +153,28 @@ function DashboardContent() {
           const certs = certData.data || []
           setCertificates(certs)
 
-          const certActivities = certs.slice(0, 2).map(cert => ({
-            id: `cert-${cert.id}`,
-            type: 'completed',
-            course: cert.Course?.title || "Course",
-            date: new Date(cert.createdAt).toLocaleDateString(),
-            points: 500
-          }))
+          const certActivities = certs.map(cert => {
+            const dateObj = new Date(cert.createdAt);
+            return {
+              id: `cert-${cert.id}`,
+              type: 'completed',
+              course: `certification in ${cert.course?.title || "Course"}`,
+              date: dateObj.toLocaleDateString(),
+              timestamp: dateObj.getTime(),
+              points: 500
+            };
+          })
           activities.push(...certActivities)
         }
       } catch (err) {
         console.error("Failed to load certificates", err)
       }
 
-      setRecentActivity(activities.sort((a, b) => new Date(b.date) - new Date(a.date)))
+      const sortedActivities = activities
+        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+        .slice(0, 5)
+
+      setRecentActivity(sortedActivities)
 
       // Generate Dynamic Deadlines based on subscription object data
       const deadlines = enrolled.map(course => {
@@ -358,7 +403,7 @@ function DashboardContent() {
             ) : (
               <div className="flex-1 flex flex-col gap-4">
                 {upcomingDeadlines.map((deadline) => (
-                  <div key={deadline.id} className="py-6 px-5 flex-1 min-h-[120px] flex flex-col justify-between rounded-2xl bg-surface-container-high/40 border border-surface-dim/10 hover:bg-surface-container-high/60 transition-all group">
+                  <div key={deadline.id} className="py-6 px-5 min-h-[120px] flex flex-col rounded-2xl bg-surface-container-high/40 border border-surface-dim/10 hover:bg-surface-container-high/60 transition-all group">
                     <div className="flex justify-between items-start mb-3">
                       <h3 className="font-bold text-primary leading-tight group-hover:text-blue-500 transition-colors">{deadline.course}</h3>
                       <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest ${deadline.priority === 'expired' ? 'bg-red-500 text-white shadow-lg' :
