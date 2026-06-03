@@ -1,10 +1,10 @@
-const { Ticket, User, Course, Lesson } = require('../models/associations');
+const { Ticket, User, Course, Lesson, Module } = require('../models/associations');
 const { Op } = require('sequelize');
 
 // Student: Create a new ticket
 exports.createTicket = async (req, res) => {
   try {
-    const { courseId, lessonId, subject, message } = req.body;
+    const { courseId, moduleId, lessonId, subject, message } = req.body;
     const userId = req.user.id;
 
     if (!subject || !message) {
@@ -17,16 +17,26 @@ exports.createTicket = async (req, res) => {
     const ticket = await Ticket.create({
       userId,
       courseId,
+      moduleId: moduleId || null,
       lessonId: lessonId || null,
       subject,
       message,
       status: 'open'
     });
 
+    const fullTicket = await Ticket.findOne({
+      where: { id: ticket.id },
+      include: [
+        { model: Course, as: 'course', attributes: ['id', 'title'] },
+        { model: Module, as: 'module', attributes: ['id', 'title'] },
+        { model: Lesson, as: 'lesson', attributes: ['id', 'title'] }
+      ]
+    });
+
     res.status(201).json({
       success: true,
       message: 'Ticket created successfully',
-      data: ticket
+      data: fullTicket
     });
   } catch (error) {
         res.status(500).json({
@@ -46,6 +56,7 @@ exports.getMyTickets = async (req, res) => {
       where: { userId },
       include: [
         { model: Course, as: 'course', attributes: ['id', 'title'] },
+        { model: Module, as: 'module', attributes: ['id', 'title'] },
         { model: Lesson, as: 'lesson', attributes: ['id', 'title'] }
       ],
       order: [['createdAt', 'DESC']]
@@ -75,6 +86,7 @@ exports.getTicketById = async (req, res) => {
       where: { id: ticketId, userId },
       include: [
         { model: Course, as: 'course', attributes: ['id', 'title'] },
+        { model: Module, as: 'module', attributes: ['id', 'title'] },
         { model: Lesson, as: 'lesson', attributes: ['id', 'title'] }
       ]
     });
@@ -113,6 +125,7 @@ exports.getAllTickets = async (req, res) => {
       include: [
         { model: User, as: 'user', attributes: ['id', 'name', 'email'] },
         { model: Course, as: 'course', attributes: ['id', 'title'] },
+        { model: Module, as: 'module', attributes: ['id', 'title'] },
         { model: Lesson, as: 'lesson', attributes: ['id', 'title'] }
       ],
       order: [['createdAt', 'DESC']]

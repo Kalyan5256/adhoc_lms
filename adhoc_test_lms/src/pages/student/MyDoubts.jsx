@@ -56,8 +56,11 @@ function MyDoubtsContent() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [expandedId, setExpandedId] = useState(null);
-  const [form, setForm] = useState({ subject: "", message: "", courseId: "" });
+  const [form, setForm] = useState({ subject: "", message: "", courseId: "", moduleId: "", lessonId: "" });
   const [myCourses, setMyCourses] = useState([]);
+  const [modules, setModules] = useState([]);
+  const [lessons, setLessons] = useState([]);
+  const [loadingCourseDetails, setLoadingCourseDetails] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [filter, setFilter] = useState("all");
 
@@ -82,6 +85,47 @@ function MyDoubtsContent() {
     }
   };
 
+  const handleCourseChange = async (courseId) => {
+    setForm((p) => ({ ...p, courseId, moduleId: "", lessonId: "" }));
+    setModules([]);
+    setLessons([]);
+
+    if (!courseId) return;
+
+    setLoadingCourseDetails(true);
+    try {
+      const token = StorageService.getToken();
+      const res = await api.courses.getById(courseId, token);
+      if (res.success && res.data) {
+        setModules(res.data.modules || []);
+      }
+    } catch (err) {
+      console.error("Failed to load course modules", err);
+      toast.error("Failed to load course modules.");
+    } finally {
+      setLoadingCourseDetails(false);
+    }
+  };
+
+  const handleModuleChange = (moduleId) => {
+    setForm((p) => ({ ...p, moduleId, lessonId: "" }));
+    setLessons([]);
+
+    if (!moduleId) return;
+
+    const selectedMod = modules.find((m) => String(m.id) === String(moduleId));
+    if (selectedMod) {
+      setLessons(selectedMod.lessons || []);
+    }
+  };
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+    setForm({ subject: "", message: "", courseId: "", moduleId: "", lessonId: "" });
+    setModules([]);
+    setLessons([]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.subject.trim() || !form.message.trim()) return;
@@ -93,13 +137,14 @@ function MyDoubtsContent() {
           subject: form.subject,
           message: form.message,
           courseId: form.courseId || null,
+          moduleId: form.moduleId || null,
+          lessonId: form.lessonId || null,
         },
         token,
       );
       if (res.success) {
         setTickets((prev) => [res.data, ...prev]);
-        setForm({ subject: "", message: "", courseId: "" });
-        setShowForm(false);
+        handleCloseForm();
         toast.success("Your question has been submitted!", { duration: 5000 });
       } else {
         toast.error(res.message || "Failed to post doubt.", { duration: 5000 });
@@ -159,7 +204,7 @@ function MyDoubtsContent() {
                   </div>
                 </div>
                 <button
-                  onClick={() => setShowForm(false)}
+                  onClick={handleCloseForm}
                   className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-surface-dim transition-colors"
                 >
                   <X className="w-5 h-5 text-primary" />
@@ -167,24 +212,73 @@ function MyDoubtsContent() {
               </div>
               <form onSubmit={handleSubmit} className="p-8 space-y-6">
                 {myCourses.length > 0 && (
-                  <div>
-                    <label className="block text-xs font-bold text-outline uppercase tracking-widest mb-2">
-                      Related Course (Optional)
-                    </label>
-                    <select
-                      value={form.courseId}
-                      onChange={(e) =>
-                        setForm((p) => ({ ...p, courseId: e.target.value }))
-                      }
-                      className="w-full px-5 py-4 bg-surface-container rounded-2xl border border-surface-dim/20 text-primary font-medium focus:outline-none focus:border-primary/50 transition-colors"
-                    >
-                      <option value="">-- Select a course --</option>
-                      {myCourses.map((c) => (
-                        <option key={c.id} value={c.id}>
-                          {c.title}
-                        </option>
-                      ))}
-                    </select>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-bold text-outline uppercase tracking-widest mb-2">
+                        Related Course (Optional)
+                      </label>
+                      <select
+                        value={form.courseId}
+                        onChange={(e) => handleCourseChange(e.target.value)}
+                        className="w-full px-5 py-4 bg-surface-container rounded-2xl border border-surface-dim/20 text-primary font-medium focus:outline-none focus:border-primary/50 transition-colors"
+                      >
+                        <option value="">-- Select a course --</option>
+                        {myCourses.map((c) => (
+                          <option key={c.id} value={c.id}>
+                            {c.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {loadingCourseDetails && (
+                      <div className="flex items-center gap-2 text-sm text-outline">
+                        <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                        <span>Loading course modules...</span>
+                      </div>
+                    )}
+
+                    {!loadingCourseDetails && form.courseId && modules.length > 0 && (
+                      <div>
+                        <label className="block text-xs font-bold text-outline uppercase tracking-widest mb-2">
+                          Related Module (Optional)
+                        </label>
+                        <select
+                          value={form.moduleId}
+                          onChange={(e) => handleModuleChange(e.target.value)}
+                          className="w-full px-5 py-4 bg-surface-container rounded-2xl border border-surface-dim/20 text-primary font-medium focus:outline-none focus:border-primary/50 transition-colors"
+                        >
+                          <option value="">-- Select a module --</option>
+                          {modules.map((m) => (
+                            <option key={m.id} value={m.id}>
+                              {m.title}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+
+                    {!loadingCourseDetails && form.moduleId && lessons.length > 0 && (
+                      <div>
+                        <label className="block text-xs font-bold text-outline uppercase tracking-widest mb-2">
+                          Related Lesson (Optional)
+                        </label>
+                        <select
+                          value={form.lessonId}
+                          onChange={(e) =>
+                            setForm((p) => ({ ...p, lessonId: e.target.value }))
+                          }
+                          className="w-full px-5 py-4 bg-surface-container rounded-2xl border border-surface-dim/20 text-primary font-medium focus:outline-none focus:border-primary/50 transition-colors"
+                        >
+                          <option value="">-- Select a lesson --</option>
+                          {lessons.map((l) => (
+                            <option key={l.id} value={l.id}>
+                              {l.title}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                   </div>
                 )}
                 <div>
@@ -220,7 +314,7 @@ function MyDoubtsContent() {
                 <div className="flex gap-4">
                   <button
                     type="button"
-                    onClick={() => setShowForm(false)}
+                    onClick={handleCloseForm}
                     className="flex-1 py-4 rounded-2xl bg-surface-container text-primary font-bold border border-surface-dim/20 hover:bg-surface-dim transition-colors"
                   >
                     Cancel
@@ -298,14 +392,24 @@ function MyDoubtsContent() {
                           {cfg.label}
                         </span>
                       </div>
-                      <div className="flex flex-wrap gap-4 text-xs text-outline">
+                      <div className="flex flex-wrap gap-3 text-xs text-outline items-center mt-2">
                         {ticket.course && (
-                          <span className="flex items-center gap-1.5">
-                            <BookOpen className="w-3.5 h-3.5" />
-                            {ticket.course.title}
+                          <span className="flex items-center gap-1.5 bg-surface-container px-2.5 py-1 rounded-lg">
+                            <BookOpen className="w-3 h-3 text-primary/75" />
+                            <span className="font-semibold text-primary/80">Course:</span> {ticket.course.title}
                           </span>
                         )}
-                        <span className="flex items-center gap-1.5">
+                        {ticket.module && (
+                          <span className="flex items-center gap-1.5 bg-surface-container px-2.5 py-1 rounded-lg">
+                            <span className="font-semibold text-primary/80">Module:</span> {ticket.module.title}
+                          </span>
+                        )}
+                        {ticket.lesson && (
+                          <span className="flex items-center gap-1.5 bg-surface-container px-2.5 py-1 rounded-lg">
+                            <span className="font-semibold text-primary/80">Lesson:</span> {ticket.lesson.title}
+                          </span>
+                        )}
+                        <span className="flex items-center gap-1.5 ml-1">
                           <Clock className="w-3.5 h-3.5" />
                           {new Date(ticket.createdAt).toLocaleDateString(
                             "en-US",

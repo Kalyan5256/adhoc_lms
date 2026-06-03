@@ -23,6 +23,14 @@ const Ticket = sequelize.define('Ticket', {
       key: 'id',
     },
   },
+  moduleId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'modules',
+      key: 'id',
+    },
+  },
   lessonId: {
     type: DataTypes.INTEGER,
     allowNull: true,

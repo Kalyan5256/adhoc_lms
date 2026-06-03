@@ -318,18 +318,28 @@ function AdminDoubtsContent() {
                           </span>
                         )}
                       </div>
-                      <div className="flex flex-wrap gap-4 text-xs text-outline">
-                        <span className="flex items-center gap-1.5">
-                          <User className="w-3.5 h-3.5" />
-                          {ticket.user?.name || "Unknown Student"}
+                      <div className="flex flex-wrap gap-3 text-xs text-outline items-center mt-2">
+                        <span className="flex items-center gap-1.5 bg-surface-container px-2.5 py-1 rounded-lg">
+                          <User className="w-3.5 h-3.5 text-primary/75" />
+                          <span className="font-semibold text-primary/80">Student:</span> {ticket.user?.name || "Unknown Student"}
                         </span>
                         {ticket.course && (
-                          <span className="flex items-center gap-1.5">
-                            <BookOpen className="w-3.5 h-3.5" />
-                            {ticket.course.title}
+                          <span className="flex items-center gap-1.5 bg-surface-container px-2.5 py-1 rounded-lg">
+                            <BookOpen className="w-3 h-3 text-primary/75" />
+                            <span className="font-semibold text-primary/80">Course:</span> {ticket.course.title}
                           </span>
                         )}
-                        <span className="flex items-center gap-1.5">
+                        {ticket.module && (
+                          <span className="flex items-center gap-1.5 bg-surface-container px-2.5 py-1 rounded-lg">
+                            <span className="font-semibold text-primary/80">Module:</span> {ticket.module.title}
+                          </span>
+                        )}
+                        {ticket.lesson && (
+                          <span className="flex items-center gap-1.5 bg-surface-container px-2.5 py-1 rounded-lg">
+                            <span className="font-semibold text-primary/80">Lesson:</span> {ticket.lesson.title}
+                          </span>
+                        )}
+                        <span className="flex items-center gap-1.5 ml-1">
                           <Clock className="w-3.5 h-3.5" />
                           {new Date(ticket.createdAt).toLocaleDateString(
                             "en-US",
