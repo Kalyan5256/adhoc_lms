@@ -59,6 +59,7 @@ export function Header() {
     localStorage.getItem("theme") || "light",
   );
   const dropdownRef = React.useRef(null);
+  const navRef = React.useRef(null);
 
   React.useEffect(() => {
     // Initial sync
@@ -89,9 +90,16 @@ export function Header() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, []);
 
   const handleToggleTheme = () => {
@@ -109,6 +117,7 @@ export function Header() {
 
   return (
     <nav
+      ref={navRef}
       className={`fixed top-0 w-full z-50 transition-all duration-300 min-h-[72px] sm:min-h-[80px] ${isAtTop ? "bg-surface/90" : "bg-surface shadow-sm border-b border-surface-dim"}`}
     >
       <div className="flex justify-between items-center w-full px-4 sm:px-8 py-4 max-w-7xl mx-auto min-h-[72px] sm:min-h-[80px]">
