@@ -12,30 +12,26 @@ export function SortControls({
   duration,
   onDurationChange,
 }) {
-<<<<<<< HEAD
-  const [isFilterOpen, setIsFilterOpen] = React.useState(false)
-  const dropdownRef = React.useRef(null)
+  const [isFilterOpen, setIsFilterOpen] = React.useState(false);
+  const dropdownRef = React.useRef(null);
 
   React.useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsFilterOpen(false)
+        setIsFilterOpen(false);
       }
     }
     
     if (isFilterOpen) {
-      document.addEventListener("mousedown", handleClickOutside)
-      document.addEventListener("touchstart", handleClickOutside)
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
     }
     
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-      document.removeEventListener("touchstart", handleClickOutside)
-    }
-  }, [isFilterOpen])
-=======
-  const [isFilterOpen, setIsFilterOpen] = React.useState(false);
->>>>>>> cbf3932f2576f302d408e8391dbe4239f8893112
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isFilterOpen]);
 
   const sortOptions = [
     { value: "popular", label: "Most Popular" },
