@@ -12,8 +12,14 @@ export function FeedbackModal({
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="bg-surface-container-lowest p-8 md:p-12 rounded-[2.5rem] shadow-2xl max-w-lg w-full relative animate-in fade-in zoom-in duration-300">
+    <div 
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+    >
+      <div 
+        onClick={(e) => e.stopPropagation()}
+        className="bg-surface-container-lowest p-8 md:p-12 rounded-[2.5rem] shadow-2xl max-w-lg w-full relative animate-in fade-in zoom-in duration-300"
+      >
         <button
           onClick={onClose}
           className="absolute top-6 right-6 p-2 rounded-full hover:bg-surface-container transition-colors text-secondary"

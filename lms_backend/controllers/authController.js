@@ -4,9 +4,15 @@ const crypto = require('crypto');
 const { User, Subscription, UserDevice } = require('../models/associations');
 
 // Generate JWT Token
-const generateToken = (user) => {
+const generateToken = (user, deviceFingerprint = null, deviceType = null) => {
   return jwt.sign(
-    { id: user.id, email: user.email, role: user.role },
+    { 
+      id: user.id, 
+      email: user.email, 
+      role: user.role,
+      deviceFingerprint,
+      deviceType 
+    },
     process.env.JWT_SECRET,
     { expiresIn: '30d' }
   );
@@ -82,7 +88,7 @@ exports.register = async (req, res) => {
     }
 
     // Generate token
-    const token = generateToken(user);
+    const token = generateToken(user, deviceFingerprint, deviceType);
 
     res.status(201).json({
       success: true,
@@ -190,7 +196,7 @@ exports.login = async (req, res) => {
     }
 
     // Generate token
-    const token = generateToken(user);
+    const token = generateToken(user, deviceFingerprint, deviceType);
 
     res.json({
       success: true,

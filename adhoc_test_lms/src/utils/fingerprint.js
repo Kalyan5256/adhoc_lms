@@ -13,8 +13,6 @@ const getBrowserHash = () => {
   const str = [
     navigator.userAgent || '',
     navigator.language || '',
-    window.screen?.width || 0,
-    window.screen?.height || 0,
     new Date().getTimezoneOffset()
   ].join('|');
 
@@ -34,11 +32,33 @@ export const getDeviceDetails = () => {
     };
   }
 
+  // Cookie helpers
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
+  const setCookie = (name, value, days = 365) => {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/; SameSite=Lax; Secure`;
+  };
+
   // Persistent identifier
   let deviceUuid = localStorage.getItem("lms_device_uuid");
-  if (!deviceUuid) {
+  const cookieUuid = getCookie("lms_device_uuid");
+
+  if (!deviceUuid && cookieUuid) {
+    deviceUuid = cookieUuid;
+    localStorage.setItem("lms_device_uuid", deviceUuid);
+  } else if (deviceUuid && !cookieUuid) {
+    setCookie("lms_device_uuid", deviceUuid);
+  } else if (!deviceUuid && !cookieUuid) {
     deviceUuid = generateUUID();
     localStorage.setItem("lms_device_uuid", deviceUuid);
+    setCookie("lms_device_uuid", deviceUuid);
   }
 
   const browserHash = getBrowserHash();

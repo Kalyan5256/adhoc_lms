@@ -25,9 +25,31 @@ exports.protect = async (req, res, next) => {
       email: req.user.email, 
       role: req.user.role 
     });
+
+    // Enforce active session verification for students
+    if (decoded.role === 'student' && decoded.deviceFingerprint) {
+      const { UserDevice } = require('../models/associations');
+      const activeDevice = await UserDevice.findOne({
+        where: {
+          userId: decoded.id,
+          deviceType: decoded.deviceType,
+          deviceFingerprint: decoded.deviceFingerprint,
+          isActive: true
+        }
+      });
+
+      if (!activeDevice) {
+        console.warn('❌ Session invalidated: Device access has been revoked or modified for user:', decoded.email);
+        return res.status(401).json({
+          success: false,
+          message: 'Session invalid. This device access has been revoked or modified. Please log in again.'
+        });
+      }
+    }
+
     next();
   } catch (error) {
-        return res.status(401).json({
+    return res.status(401).json({
       success: false,
       message: 'Not authorized, token failed',
     });
