@@ -12,7 +12,7 @@ export function SortControls({
   duration,
   onDurationChange,
 }) {
-  const [isFilterOpen, setIsFilterOpen] = React.useState(false);
+  const [isFilterOpen, setIsFilterOpen] = React.useState(false)
   const dropdownRef = React.useRef(null);
 
   React.useEffect(() => {

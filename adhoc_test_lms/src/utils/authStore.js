@@ -1,24 +1,48 @@
 // src/utils/authStore.js
-import { StorageService } from "../services/storage";
 
-let subscribers = [];
+let subscribers = []
+
+const getAuthState = () => {
+  if (typeof window === "undefined") {
+    return { isAuthenticated: false, user: null };
+  }
+  try {
+    const token = localStorage.getItem("lms_token");
+    const userStr = localStorage.getItem("lms_user");
+    let user = null;
+    if (userStr) {
+      try {
+        user = JSON.parse(userStr);
+      } catch {
+        user = null;
+      }
+    }
+    return {
+      isAuthenticated: !!token,
+      user: user
+    };
+  } catch (e) {
+    console.warn("authStore failed to read storage:", e);
+    return { isAuthenticated: false, user: null };
+  }
+};
 
 export const authStore = {
   subscribe: (callback) => {
-    subscribers.push(callback);
+    subscribers.push(callback)
     return () => {
-      subscribers = subscribers.filter((s) => s !== callback);
-    };
+      subscribers = subscribers.filter(s => s !== callback)
+    }
   },
 
   notify: (user) => {
     const newState = {
       isAuthenticated: !!user,
-      user: user,
-    };
-    subscribers.forEach((callback) => callback(newState));
+      user: user
+    }
+    subscribers.forEach(callback => callback(newState))
   },
 
-  getState: () => StorageService.getAuthState(),
-  getSnapshot: () => StorageService.getAuthState(),
+  getState: getAuthState,
+  getSnapshot: getAuthState
 };

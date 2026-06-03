@@ -58,7 +58,7 @@ export function Header() {
   const [theme, setTheme] = React.useState(
     localStorage.getItem("theme") || "light",
   );
-  const dropdownRef = React.useRef(null);
+  const dropdownRef = React.useRef(null)
   const navRef = React.useRef(null);
 
   React.useEffect(() => {
