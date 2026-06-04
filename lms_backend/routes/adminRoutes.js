@@ -36,4 +36,22 @@ router.post('/modules/:moduleId/lessons', lessonController.addLesson);
 router.put('/lessons/:id', lessonController.updateLesson);
 router.delete('/lessons/:id', lessonController.deleteLesson);
 
+// Database synchronization route
+router.post('/sync-db', async (req, res) => {
+  try {
+    const { sequelize } = require('../models/associations');
+    await sequelize.sync({ alter: true });
+    res.json({
+      success: true,
+      message: 'Database synchronized successfully with alter: true'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Database synchronization failed',
+      error: error.message
+    });
+  }
+});
+
 module.exports = router;
