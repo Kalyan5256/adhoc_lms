@@ -40,15 +40,41 @@ router.delete('/lessons/:id', lessonController.deleteLesson);
 router.post('/sync-db', async (req, res) => {
   try {
     const { sequelize } = require('../models/associations');
-    await sequelize.sync({ alter: true });
+    
+    // 1. Try to add moduleId column to tickets table
+    try {
+      await sequelize.query('ALTER TABLE tickets ADD COLUMN moduleId INT NULL;');
+      console.log('Added moduleId column successfully.');
+    } catch (err) {
+      // If column already exists, ignore the error
+      if (err.parent && (err.parent.code === 'ER_DUP_FIELDNAME' || err.parent.errno === 1060)) {
+        console.log('moduleId column already exists.');
+      } else {
+        throw err;
+      }
+    }
+    
+    // 2. Try to add foreign key constraint for moduleId
+    try {
+      await sequelize.query('ALTER TABLE tickets ADD CONSTRAINT fk_tickets_moduleId FOREIGN KEY (moduleId) REFERENCES modules(id) ON DELETE SET NULL ON UPDATE CASCADE;');
+      console.log('Added foreign key constraint fk_tickets_moduleId successfully.');
+    } catch (err) {
+      // If constraint already exists, ignore
+      if (err.parent && (err.parent.code === 'ER_DUP_KEY' || err.parent.code === 'ER_FK_DUP_NAME' || err.parent.errno === 1022 || err.parent.errno === 1211)) {
+        console.log('Foreign key constraint fk_tickets_moduleId already exists.');
+      } else {
+        throw err;
+      }
+    }
+
     res.json({
       success: true,
-      message: 'Database synchronized successfully with alter: true'
+      message: 'Database schema updated successfully using direct SQL query!'
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Database synchronization failed',
+      message: 'Database schema update failed',
       error: error.message
     });
   }
