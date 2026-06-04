@@ -165,11 +165,19 @@ exports.login = async (req, res) => {
       if (activeDevice) {
         // Compare fingerprints
         if (activeDevice.deviceFingerprint !== deviceFingerprint) {
-          return res.status(403).json({
-            success: false,
-            code: 'DEVICE_LIMIT_EXCEEDED',
-            message: `Access denied. You already have a registered ${deviceType} device. Please contact support to authorize this device.`,
-          });
+          // If the deviceName (Browser + OS) matches exactly, we assume it's the same device
+          // and allow updating the fingerprint (e.g. if cookies/localStorage were cleared)
+          if (activeDevice.deviceName === deviceName) {
+            activeDevice.deviceFingerprint = deviceFingerprint;
+            activeDevice.lastLogin = new Date();
+            await activeDevice.save();
+          } else {
+            return res.status(403).json({
+              success: false,
+              code: 'DEVICE_LIMIT_EXCEEDED',
+              message: `Access denied. You already have a registered ${deviceType} device. Please contact support to authorize this device.`,
+            });
+          }
         } else {
           // Update lastLogin
           activeDevice.lastLogin = new Date();

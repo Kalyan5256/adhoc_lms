@@ -15,6 +15,16 @@ export class ApiError extends Error {
 
 const handleResponse = async (response) => {
   if (response.status === 401) {
+    // If it's a login request, don't clear local storage and show the specific error message
+    if (response.url && response.url.includes('/auth/login')) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new ApiError(
+        errorData.message || 'Invalid credentials',
+        401,
+        errorData,
+      );
+    }
+
     // Unauthorized - clear session
     localStorage.removeItem("lms_token");
     localStorage.removeItem("lms_user");
