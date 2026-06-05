@@ -177,12 +177,12 @@ function MyDoubtsContent() {
               Ask questions and get answers from instructors.
             </p>
           </div>
-          <button
+          {/* <button
             onClick={() => setShowForm(true)}
             className="px-6 py-3 signature-gradient text-white rounded-xl font-bold hover:opacity-90 transition-all flex items-center gap-2 shadow-lg"
           >
             <Plus className="w-5 h-5" /> Ask a Question
-          </button>
+          </button> */}
         </div>
 
         {/* Ask Form Modal */}
