@@ -53,6 +53,30 @@ router.post('/sync-db', async (req, res) => {
         throw err;
       }
     }
+
+    // 2. Try to add category column to courses table
+    try {
+      await sequelize.query("ALTER TABLE courses ADD COLUMN category VARCHAR(255) DEFAULT 'development';");
+      console.log('Added category column to courses successfully.');
+    } catch (err) {
+      if (err.parent && (err.parent.code === 'ER_DUP_FIELDNAME' || err.parent.errno === 1060)) {
+        console.log('category column already exists.');
+      } else {
+        throw err;
+      }
+    }
+
+    // 3. Try to add duration column to courses table
+    try {
+      await sequelize.query("ALTER TABLE courses ADD COLUMN duration INT DEFAULT 20;");
+      console.log('Added duration column to courses successfully.');
+    } catch (err) {
+      if (err.parent && (err.parent.code === 'ER_DUP_FIELDNAME' || err.parent.errno === 1060)) {
+        console.log('duration column already exists.');
+      } else {
+        throw err;
+      }
+    }
     
     // 2. Try to add foreign key constraint for moduleId
     try {
