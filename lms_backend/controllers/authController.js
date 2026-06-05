@@ -31,12 +31,12 @@ exports.register = async (req, res) => {
       });
     }
 
-    if (role === 'student' && (!deviceFingerprint || !deviceType || !deviceName)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Device registration details are required.',
-      });
-    }
+    // Generate server-side fallback device details if missing
+    const ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    const finalDeviceFingerprint = deviceFingerprint || crypto.createHash('sha256').update(`${ip}-${userAgent}`).digest('hex');
+    const finalDeviceType = deviceType || (/mobile|android|iphone|ipad/i.test(userAgent) ? 'mobile' : 'desktop');
+    const finalDeviceName = deviceName || (userAgent !== 'unknown' ? userAgent.substring(0, 50) : 'Unknown Device');
 
     // Check if user already exists
     const existingUser = await User.findOne({ where: { email } });
@@ -76,19 +76,19 @@ exports.register = async (req, res) => {
     });
 
     // Register the initial device
-    if (deviceFingerprint && deviceType && deviceName) {
+    if (role === 'student') {
       await UserDevice.create({
         userId: user.id,
-        deviceType,
-        deviceFingerprint,
-        deviceName,
+        deviceType: finalDeviceType,
+        deviceFingerprint: finalDeviceFingerprint,
+        deviceName: finalDeviceName,
         isActive: true,
         lastLogin: new Date()
       });
     }
 
     // Generate token
-    const token = generateToken(user, deviceFingerprint, deviceType);
+    const token = generateToken(user, finalDeviceFingerprint, finalDeviceType);
 
     res.status(201).json({
       success: true,
@@ -144,38 +144,38 @@ exports.login = async (req, res) => {
       });
     }
 
+    // Generate server-side fallback device details if missing
+    const ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    const finalDeviceFingerprint = deviceFingerprint || crypto.createHash('sha256').update(`${ip}-${userAgent}`).digest('hex');
+    const finalDeviceType = deviceType || (/mobile|android|iphone|ipad/i.test(userAgent) ? 'mobile' : 'desktop');
+    const finalDeviceName = deviceName || (userAgent !== 'unknown' ? userAgent.substring(0, 50) : 'Unknown Device');
+
     // Validate device if user is a student or device details are supplied
     if (user.role === 'student' || (deviceFingerprint && deviceType)) {
-      if (!deviceFingerprint || !deviceType || !deviceName) {
-        return res.status(400).json({
-          success: false,
-          message: 'Device identification details are required.',
-        });
-      }
-
       // Check if there is an active device of the same type
       const activeDevice = await UserDevice.findOne({
         where: {
           userId: user.id,
-          deviceType,
+          deviceType: finalDeviceType,
           isActive: true
         }
       });
 
       if (activeDevice) {
         // Compare fingerprints
-        if (activeDevice.deviceFingerprint !== deviceFingerprint) {
+        if (activeDevice.deviceFingerprint !== finalDeviceFingerprint) {
           // If the deviceName (Browser + OS) matches exactly, we assume it's the same device
           // and allow updating the fingerprint (e.g. if cookies/localStorage were cleared)
-          if (activeDevice.deviceName === deviceName) {
-            activeDevice.deviceFingerprint = deviceFingerprint;
+          if (activeDevice.deviceName === finalDeviceName) {
+            activeDevice.deviceFingerprint = finalDeviceFingerprint;
             activeDevice.lastLogin = new Date();
             await activeDevice.save();
           } else {
             return res.status(403).json({
               success: false,
               code: 'DEVICE_LIMIT_EXCEEDED',
-              message: `Access denied. You already have a registered ${deviceType} device. Please contact support to authorize this device.`,
+              message: `Access denied. You already have a registered ${finalDeviceType} device. Please contact support to authorize this device.`,
             });
           }
         } else {
@@ -187,9 +187,9 @@ exports.login = async (req, res) => {
         // Register new device
         await UserDevice.create({
           userId: user.id,
-          deviceType,
-          deviceFingerprint,
-          deviceName,
+          deviceType: finalDeviceType,
+          deviceFingerprint: finalDeviceFingerprint,
+          deviceName: finalDeviceName,
           isActive: true,
           lastLogin: new Date()
         });
@@ -204,7 +204,7 @@ exports.login = async (req, res) => {
     }
 
     // Generate token
-    const token = generateToken(user, deviceFingerprint, deviceType);
+    const token = generateToken(user, finalDeviceFingerprint, finalDeviceType);
 
     res.json({
       success: true,
