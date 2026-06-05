@@ -38,11 +38,12 @@ function AdminCoursesContent() {
     title: "",
     description: "",
     price: "",
-    category: "cybersecurity",
+    category: "development",
     level: "beginner",
     imageUrl: "",
     course_type: "mega",
     allowed_plan: "1month",
+    duration: "",
   });
 
   useEffect(() => {
@@ -93,11 +94,12 @@ function AdminCoursesContent() {
         title: course.title || "",
         description: course.description || "",
         price: priceValue,
-        category: course.category || "cybersecurity",
+        category: course.category || "development",
         level: course.level || "beginner",
         imageUrl: course.thumbnail || course.imageUrl || "",
         course_type: course.course_type || "mega",
         allowed_plan: course.allowed_plan || "1month",
+        duration: course.duration || "",
       });
     } else {
       setEditingCourse(null);
@@ -105,11 +107,12 @@ function AdminCoursesContent() {
         title: "",
         description: "",
         price: "",
-        category: "cybersecurity",
+        category: "development",
         level: "beginner",
         imageUrl: "",
         course_type: "mega",
         allowed_plan: "1month",
+        duration: "",
       });
     }
     setIsModalOpen(true);
@@ -123,11 +126,12 @@ function AdminCoursesContent() {
       title: "",
       description: "",
       price: "",
-      category: "cybersecurity",
+      category: "development",
       level: "beginner",
       imageUrl: "",
       course_type: "mega",
       allowed_plan: "1month",
+      duration: "",
     });
   };
 
@@ -148,6 +152,8 @@ function AdminCoursesContent() {
         thumbnail: formData.imageUrl,
         course_type: formData.course_type,
         allowed_plan: formData.allowed_plan,
+        category: formData.category,
+        duration: Number(formData.duration) || 20,
       };
 
       // Add price based on subscription duration
@@ -434,10 +440,10 @@ function AdminCoursesContent() {
                       onChange={handleFormChange}
                       className="w-full px-4 py-3 bg-surface-container rounded-xl border border-surface-dim/20 focus:ring-2 focus:ring-primary focus:outline-none text-primary font-medium"
                     >
-                      <option value="cybersecurity">Cybersecurity</option>
-                      <option value="cloud">Cloud Computing</option>
-                      <option value="devops">DevOps</option>
-                      <option value="aiml">AI / ML</option>
+                      <option value="development">Development</option>
+                      <option value="design">Design</option>
+                      <option value="business">Business</option>
+                      <option value="marketing">Marketing</option>
                     </select>
                   </div>
 
@@ -516,6 +522,22 @@ function AdminCoursesContent() {
                       onChange={handleFormChange}
                       className="w-full px-4 py-3 bg-surface-container rounded-xl border border-surface-dim/20 focus:ring-2 focus:ring-primary focus:outline-none"
                       placeholder="https://example.com/image.jpg"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-secondary uppercase tracking-wider mb-2">
+                      Duration (Hours) *
+                    </label>
+                    <input
+                      type="number"
+                      name="duration"
+                      value={formData.duration}
+                      onChange={handleFormChange}
+                      required
+                      min="1"
+                      className="w-full px-4 py-3 bg-surface-container rounded-xl border border-surface-dim/20 focus:ring-2 focus:ring-primary focus:outline-none"
+                      placeholder="e.g. 20"
                     />
                   </div>
                 </div>

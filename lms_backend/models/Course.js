@@ -46,6 +46,15 @@ const Course = sequelize.define('Course', {
     validate: {
       isIn: [['1month', '3months', '6months']]
     }
+  },
+  category: {
+    type: DataTypes.STRING,
+    defaultValue: 'development'
+  },
+  duration: {
+    type: DataTypes.INTEGER,
+    defaultValue: 20,
+    comment: 'Course duration in hours'
   }
 }, {
   timestamps: true,

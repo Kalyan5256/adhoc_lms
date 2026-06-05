@@ -81,6 +81,7 @@ app.use('/api/password', passwordRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/blogs', require('./routes/blogRoutes'));
 app.use('/api/feedbacks', require('./routes/feedbackRoutes'));
+app.use('/api/chatbot', require('./routes/chatbotRoutes'));
 
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend is working!' });

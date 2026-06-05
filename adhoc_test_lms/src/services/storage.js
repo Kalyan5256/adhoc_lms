@@ -227,14 +227,16 @@ export const StorageService = {
       allowed_plan: course.allowed_plan,
       level: course.level || "intermediate",
       duration:
-        course.lessons && course.lessons.length > 0
-          ? Math.round(
-              course.lessons.reduce(
-                (acc, l) => acc + (Number(l.duration) || 0),
-                0,
-              ) / 60,
-            )
-          : course.duration || 20,
+        course.duration !== undefined && course.duration !== null
+          ? Number(course.duration)
+          : course.lessons && course.lessons.length > 0
+            ? Math.round(
+                course.lessons.reduce(
+                  (acc, l) => acc + (Number(l.duration) || 0),
+                  0,
+                ) / 60,
+              )
+            : 20,
       rating: course.rating || 4.5,
       reviewCount: course.review_count || 0,
       enrolled:

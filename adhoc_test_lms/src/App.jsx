@@ -14,6 +14,7 @@ import RefundPolicy from "./components/RefundPolicy";
 import { Footer } from "./components/layout/Footer";
 import { BottomNav } from "./components/layout/BottomNav";
 import Home from "./pages/public/Home";
+import { ChatbotWidget } from "./components/chatbot/ChatbotWidget";
 
 // Lazy Pages
 const Catalog = React.lazy(() => import("./pages/public/Catalog"));
@@ -265,6 +266,7 @@ function App() {
           </main>
           <Footer />
           <BottomNav />
+          <ChatbotWidget />
           <Toaster
             position="top-right"
             richColors

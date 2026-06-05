@@ -339,4 +339,13 @@ export const api = {
     getAll: () => request("/blogs"),
     getBySlug: (slug) => request(`/blogs/slug/${slug}`),
   },
+
+  // Chatbot
+  chatbot: {
+    chat: (message, history = []) =>
+      request("/chatbot/chat", {
+        method: "POST",
+        body: { message, history },
+      }),
+  },
 };
