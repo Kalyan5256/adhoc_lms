@@ -153,6 +153,7 @@ function AdminCoursesContent() {
         course_type: formData.course_type,
         allowed_plan: formData.allowed_plan,
         category: formData.category,
+        level: formData.level,
         duration: Number(formData.duration) || 20,
       };
 

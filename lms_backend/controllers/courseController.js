@@ -11,7 +11,7 @@ exports.getAllCourses = async (req, res) => {
   try {
     // Get ALL courses directly from the database to avoid stale cache issues
     const dbCourses = await Course.findAll({
-      attributes: ['id', 'title', 'description', 'thumbnail', 'price_1month', 'price_3months', 'price_6months', 'course_type', 'allowed_plan', 'category', 'duration'],
+      attributes: ['id', 'title', 'description', 'thumbnail', 'price_1month', 'price_3months', 'price_6months', 'course_type', 'allowed_plan', 'category', 'level', 'duration'],
       order: [['createdAt', 'DESC']]
     });
     const courses = dbCourses.map(course => course.toJSON());
@@ -130,6 +130,7 @@ exports.getCourseById = async (req, res) => {
         course_type: course.course_type,
         allowed_plan: course.allowed_plan,
         category: course.category,
+        level: course.level,
         duration: course.duration,
         modules: course.modules || [],
         userAccess: {
@@ -188,6 +189,7 @@ exports.getMyCourses = async (req, res) => {
           title: course.title,
           description: course.description,
           thumbnail: course.thumbnail,
+          level: course.level,
           subscription: {
             id: sub.id,
             plan: sub.plan,
@@ -218,7 +220,7 @@ exports.getMyCourses = async (req, res) => {
 // Admin: Create new course
 exports.createCourse = async (req, res) => {
   try {
-    const { title, description, thumbnail, price_1month, price_3months, price_6months, course_type, allowed_plan, category, duration } = req.body;
+    const { title, description, thumbnail, price_1month, price_3months, price_6months, course_type, allowed_plan, category, duration, level } = req.body;
 
     if (!title) {
       return res.status(400).json({
@@ -237,6 +239,7 @@ exports.createCourse = async (req, res) => {
       course_type: course_type || 'mega',
       allowed_plan: allowed_plan || '1month',
       category: category || 'development',
+      level: level || 'beginner',
       duration: duration !== undefined ? duration : 20
     });
 
@@ -258,6 +261,7 @@ exports.createCourse = async (req, res) => {
         course_type: course.course_type,
         allowed_plan: course.allowed_plan,
         category: course.category,
+        level: course.level,
         duration: course.duration
       }
     });
@@ -282,7 +286,7 @@ exports.updateCourse = async (req, res) => {
       });
     }
     
-    const { title, description, thumbnail, price_1month, price_3months, price_6months, course_type, allowed_plan, category, duration } = req.body;
+    const { title, description, thumbnail, price_1month, price_3months, price_6months, course_type, allowed_plan, category, duration, level } = req.body;
     
     await course.update({
       title: title || course.title,
@@ -294,6 +298,7 @@ exports.updateCourse = async (req, res) => {
       course_type: course_type !== undefined ? course_type : course.course_type,
       allowed_plan: allowed_plan !== undefined ? allowed_plan : course.allowed_plan,
       category: category !== undefined ? category : course.category,
+      level: level !== undefined ? level : course.level,
       duration: duration !== undefined ? duration : course.duration
     });
     
@@ -315,6 +320,7 @@ exports.updateCourse = async (req, res) => {
         course_type: course.course_type,
         allowed_plan: course.allowed_plan,
         category: course.category,
+        level: course.level,
         duration: course.duration
       }
     });

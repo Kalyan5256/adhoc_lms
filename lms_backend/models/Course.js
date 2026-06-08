@@ -51,6 +51,13 @@ const Course = sequelize.define('Course', {
     type: DataTypes.STRING,
     defaultValue: 'development'
   },
+  level: {
+    type: DataTypes.STRING,
+    defaultValue: 'beginner',
+    validate: {
+      isIn: [['beginner', 'intermediate', 'advanced']]
+    }
+  },
   duration: {
     type: DataTypes.INTEGER,
     defaultValue: 20,

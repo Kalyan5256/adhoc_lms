@@ -34,7 +34,8 @@ const seedData = async () => {
       thumbnail: 'https://via.placeholder.com/300x200?text=JavaScript',
       price_1month: 599,
       price_3months: 1499,
-      price_6months: 2499
+      price_6months: 2499,
+      level: 'intermediate'
     });
     console.log('✅ JavaScript course created (1m: ₹599, 3m: ₹1499, 6m: ₹2499)');
 
@@ -44,7 +45,8 @@ const seedData = async () => {
       thumbnail: 'https://via.placeholder.com/300x200?text=React',
       price_1month: 799,
       price_3months: 1999,
-      price_6months: 3299
+      price_6months: 3299,
+      level: 'advanced'
     });
     console.log('✅ React course created (1m: ₹799, 3m: ₹1999, 6m: ₹3299)');
 
@@ -54,7 +56,8 @@ const seedData = async () => {
       thumbnail: 'https://via.placeholder.com/300x200?text=Python',
       price_1month: 399,
       price_3months: 999,
-      price_6months: 1699
+      price_6months: 1699,
+      level: 'beginner'
     });
     console.log('✅ Python course created (1m: ₹399, 3m: ₹999, 6m: ₹1699)');
 

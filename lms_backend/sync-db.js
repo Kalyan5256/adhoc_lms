@@ -43,6 +43,18 @@ async function syncDatabase() {
         throw err;
       }
     }
+
+    // 4. Try to add level column to courses table
+    try {
+      await sequelize.query("ALTER TABLE courses ADD COLUMN level VARCHAR(255) DEFAULT 'beginner';");
+      console.log('Added level column to courses successfully.');
+    } catch (err) {
+      if (err.parent && (err.parent.code === 'ER_DUP_FIELDNAME' || err.parent.errno === 1060)) {
+        console.log('level column already exists.');
+      } else {
+        throw err;
+      }
+    }
     
     // 2. Try to add foreign key constraint for moduleId
     try {

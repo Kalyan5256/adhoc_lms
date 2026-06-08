@@ -18,11 +18,11 @@ exports.chat = async (req, res) => {
 
     // Fetch courses from DB to give real-time context
     const dbCourses = await Course.findAll({
-      attributes: ['id', 'title', 'description', 'category', 'duration', 'course_type']
+      attributes: ['id', 'title', 'description', 'category', 'duration', 'course_type', 'level']
     });
 
     const coursesContext = dbCourses.map(c => 
-      `- [ID: ${c.id}] ${c.title} (${c.category}, Level: ${c.course_type === 'mega' ? 'Intermediate/Advanced' : 'Beginner'}, Duration: ${c.duration} hrs): ${c.description}`
+      `- [ID: ${c.id}] ${c.title} (${c.category}, Level: ${c.level || (c.course_type === 'mega' ? 'Intermediate/Advanced' : 'Beginner')}, Duration: ${c.duration} hrs): ${c.description}`
     ).join('\n');
 
     // System prompt instructing the AI
