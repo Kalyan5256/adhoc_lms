@@ -139,6 +139,19 @@ const startDatabase = async () => {
   try {
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');
+    
+    // Implicitly add level column to courses table if it does not exist
+    try {
+      await sequelize.query("ALTER TABLE courses ADD COLUMN level VARCHAR(255) DEFAULT 'beginner';");
+      console.log('Implicitly added level column to courses table.');
+    } catch (err) {
+      if (err.parent && (err.parent.code === 'ER_DUP_FIELDNAME' || err.parent.errno === 1060)) {
+        console.log('level column already exists in courses table.');
+      } else {
+        console.error('Failed to implicitly add level column:', err.message);
+      }
+    }
+
     if (process.env.NODE_ENV === 'development' || process.env.SYNC_DB === 'true') {
       await sequelize.sync({ alter: true });
       console.log('Database synchronized with alter: true');
