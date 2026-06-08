@@ -127,21 +127,23 @@ export function ChatbotWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[999]">
+    <motion.div
+      drag
+      dragControls={dragControls}
+      dragListener={false}
+      dragMomentum={false}
+      dragConstraints={{
+        left: -windowSize.width + (isOpen ? (windowSize.width > 450 ? 450 : windowSize.width * 0.95) : 80),
+        right: 0,
+        top: -windowSize.height + (isOpen ? 600 : 80),
+        bottom: 0,
+      }}
+      className="fixed bottom-6 right-6 z-[999] flex flex-col items-end"
+    >
       <AnimatePresence>
         {/* Chat Widget Panel */}
         {isOpen && (
           <motion.div
-            drag
-            dragControls={dragControls}
-            dragListener={false}
-            dragMomentum={false}
-            dragConstraints={{
-              left: -windowSize.width + (windowSize.width > 450 ? 450 : windowSize.width * 0.95),
-              right: 0,
-              top: -windowSize.height + 580,
-              bottom: 0,
-            }}
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -305,6 +307,10 @@ export function ChatbotWidget() {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        onPointerDown={(e) => {
+          dragControls.start(e);
+        }}
+        style={{ touchAction: "none" }}
         onClick={() => setIsOpen(!isOpen)}
         className="w-14 h-14 signature-gradient rounded-full flex items-center justify-center text-white shadow-2xl relative cursor-pointer group"
       >
@@ -321,6 +327,6 @@ export function ChatbotWidget() {
           </div>
         )}
       </motion.button>
-    </div>
+    </motion.div>
   );
 }

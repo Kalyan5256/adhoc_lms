@@ -275,7 +275,9 @@ export default function CourseDetail() {
           className="w-full h-full object-cover scale-105"
           alt={course.title}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent"></div>
+        {/* Semi-transparent white overlay to ensure high contrast and text readability */}
+        <div className="absolute inset-0 bg-white/75 backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
 
         <div className="absolute bottom-0 left-0 right-0 pb-16">
           <div className="max-w-7xl mx-auto px-3 sm:px-8">
