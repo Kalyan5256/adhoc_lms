@@ -35,6 +35,10 @@ const UserDevice = sequelize.define('UserDevice', {
     defaultValue: true,
     allowNull: false,
   },
+  ipAddress: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   lastLogin: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

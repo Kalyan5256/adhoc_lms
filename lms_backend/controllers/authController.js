@@ -82,6 +82,7 @@ exports.register = async (req, res) => {
         deviceType: finalDeviceType,
         deviceFingerprint: finalDeviceFingerprint,
         deviceName: finalDeviceName,
+        ipAddress: ip,
         isActive: true,
         lastLogin: new Date()
       });
@@ -165,14 +166,24 @@ exports.login = async (req, res) => {
       if (activeDevice) {
         // Compare fingerprints
         if (activeDevice.deviceFingerprint !== finalDeviceFingerprint) {
-          return res.status(403).json({
-            success: false,
-            code: 'DEVICE_LIMIT_EXCEEDED',
-            message: `Access denied. You already have a registered ${finalDeviceType} device. Please contact support to authorize this device.`,
-          });
+          // If the IP address matches exactly, we assume it's either the same device
+          // (e.g. if cookies/localStorage were cleared) or a device on the same local network,
+          // and allow updating the fingerprint automatically.
+          if (activeDevice.ipAddress && activeDevice.ipAddress === ip && ip !== 'unknown') {
+            activeDevice.deviceFingerprint = finalDeviceFingerprint;
+            activeDevice.lastLogin = new Date();
+            await activeDevice.save();
+          } else {
+            return res.status(403).json({
+              success: false,
+              code: 'DEVICE_LIMIT_EXCEEDED',
+              message: `Access denied. You already have a registered ${finalDeviceType} device. Please contact support to authorize this device.`,
+            });
+          }
         } else {
-          // Update lastLogin
+          // Update lastLogin and update IP address in case it changed
           activeDevice.lastLogin = new Date();
+          activeDevice.ipAddress = ip;
           await activeDevice.save();
         }
       } else {
@@ -182,6 +193,7 @@ exports.login = async (req, res) => {
           deviceType: finalDeviceType,
           deviceFingerprint: finalDeviceFingerprint,
           deviceName: finalDeviceName,
+          ipAddress: ip,
           isActive: true,
           lastLogin: new Date()
         });

@@ -55,6 +55,18 @@ async function syncDatabase() {
         throw err;
       }
     }
+
+    // 5. Try to add ipAddress column to user_devices table
+    try {
+      await sequelize.query("ALTER TABLE user_devices ADD COLUMN ipAddress VARCHAR(255) NULL;");
+      console.log('Added ipAddress column to user_devices successfully.');
+    } catch (err) {
+      if (err.parent && (err.parent.code === 'ER_DUP_FIELDNAME' || err.parent.errno === 1060)) {
+        console.log('ipAddress column already exists.');
+      } else {
+        throw err;
+      }
+    }
     
     // 2. Try to add foreign key constraint for moduleId
     try {
