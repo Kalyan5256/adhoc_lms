@@ -11,11 +11,28 @@ import {
   GraduationCap,
   Sparkle
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useDragControls } from "framer-motion";
 import { api } from "../../services/api";
 import { StorageService } from "../../services/storage";
 
 export function ChatbotWidget() {
+  const dragControls = useDragControls();
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 1200,
+    height: typeof window !== "undefined" ? window.innerHeight : 800,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -115,6 +132,16 @@ export function ChatbotWidget() {
         {/* Chat Widget Panel */}
         {isOpen && (
           <motion.div
+            drag
+            dragControls={dragControls}
+            dragListener={false}
+            dragMomentum={false}
+            dragConstraints={{
+              left: -windowSize.width + (windowSize.width > 450 ? 450 : windowSize.width * 0.95),
+              right: 0,
+              top: -windowSize.height + 580,
+              bottom: 0,
+            }}
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
@@ -122,7 +149,14 @@ export function ChatbotWidget() {
             className="w-[90vw] sm:w-[400px] h-[550px] bg-surface-container-lowest/95 backdrop-blur-md rounded-[2.5rem] border border-surface-dim/30 shadow-2xl flex flex-col overflow-hidden mb-4"
           >
             {/* Header */}
-            <div className="signature-gradient p-5 text-white flex justify-between items-center relative overflow-hidden">
+            <div 
+              onPointerDown={(e) => {
+                if (!e.target.closest('button')) {
+                  dragControls.start(e);
+                }
+              }}
+              className="signature-gradient p-5 text-white flex justify-between items-center relative overflow-hidden cursor-grab active:cursor-grabbing select-none"
+            >
               {/* Background Glow */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
               
