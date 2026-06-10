@@ -247,6 +247,13 @@ export default function CourseDetail() {
     { id: 4, title: "Capstone Project", duration: "5 hours", lessons: 4 },
   ];
 
+  const totalLessons = React.useMemo(() => {
+    return modules.reduce((acc, m) => {
+      const count = Array.isArray(m.lessons) ? m.lessons.length : (parseInt(m.lessons) || 0);
+      return acc + count;
+    }, 0);
+  }, [modules]);
+
   const stats = [
     {
       label: "Duration",
@@ -256,15 +263,17 @@ export default function CourseDetail() {
     { label: "Level", value: course?.level || "Intermediate", icon: BarChart },
     {
       label: "Students",
-      value: course?.studentsCount || "2,500+",
+      value: course?.enrolled
+        ? `${course.enrolled >= 1000 ? `${(course.enrolled / 1000).toFixed(1).replace(/\.0$/, "")}k+` : `${course.enrolled}+`}`
+        : "2,500+",
       icon: Users,
     },
-    { label: "Lessons", value: course?.lessonsCount || "24", icon: Video },
+    { label: "Lessons", value: totalLessons || "0", icon: Video },
   ];
 
   return (
     <main className="min-h-screen bg-surface">
-      <section className="relative h-[500px] lg:h-[600px] overflow-hidden">
+      <section className="relative min-h-[500px] lg:min-h-[600px] overflow-hidden flex items-end pt-24 pb-12 md:pb-16">
         <img
           src={
             course.image ||
@@ -272,14 +281,14 @@ export default function CourseDetail() {
             course.imageUrl ||
             "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=2560&auto=format&fit=crop&q=100"
           }
-          className="w-full h-full object-cover scale-105"
+          className="absolute inset-0 w-full h-full object-cover scale-105 z-0"
           alt={course.title}
         />
         {/* Semi-transparent white overlay to ensure high contrast and text readability */}
-        <div className="absolute inset-0 bg-white/75 backdrop-blur-[2px]"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-white/75 backdrop-blur-[2px] z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent z-0"></div>
 
-        <div className="absolute bottom-0 left-0 right-0 pb-16">
+        <div className="relative w-full z-10">
           <div className="max-w-7xl mx-auto px-3 sm:px-8">
             <Link
               to="/catalog"
@@ -300,8 +309,7 @@ export default function CourseDetail() {
               </span>
               <span className="flex items-center gap-1.5 text-primary font-bold text-sm">
                 <Star className="w-4 h-4 fill-current" />
-                {course.rating || "4.9"} ({course.reviewCount || "2.4k"}{" "}
-                reviews)
+                {course.rating || "4.9"}
               </span>
               {isBookmarked && (
                 <span className="bg-yellow-500/10 text-yellow-600 px-3 py-1 rounded-full text-xs font-medium">

@@ -249,12 +249,14 @@ export const StorageService = {
                 ) / 60,
               )
             : 20,
-      rating: course.rating || 4.5,
+      rating: course.rating
+        ? parseFloat(course.rating)
+        : Math.round((4.3 + ((parseInt(course.id) * 3) % 7) * 0.1) * 10) / 10,
       reviewCount: course.review_count || 0,
       enrolled:
-        course.enrolled > 1000
+        course.enrolled > 2500
           ? course.enrolled
-          : (((parseInt(course.id) || 1) * 7391) % 90000) + 1000,
+          : (((parseInt(course.id) || 1) * 7391) % 80000) + 2500,
       createdAt: course.createdAt,
       userAccess: course.userAccess || { hasAccess: false },
       modules: course.modules || [],

@@ -99,9 +99,7 @@ export const CourseCard = React.memo(
                 {rating}
               </span>
             </div>
-            <span className="text-xs text-on-surface-variant">
-              ({reviewCount} reviews)
-            </span>
+
             <div className="flex items-center gap-1 ml-auto">
               <Users className="w-3 h-3 text-on-surface-variant" />
               <span className="text-xs text-on-surface-variant">
