@@ -23,7 +23,7 @@ import { api } from "../../services/api";
 
 export default function Dashboard() {
   return (
-    <ProtectedRoute fallbackPath="/auth">
+    <ProtectedRoute fallbackPath="/login">
       <DashboardContent />
     </ProtectedRoute>
   );

@@ -5,7 +5,7 @@ import { authStore } from "../utils/authStore";
 
 export function ProtectedRoute({
   children,
-  fallbackPath = "/auth",
+  fallbackPath = "/login",
   requiredRole = null,
 }) {
   const navigate = useNavigate();

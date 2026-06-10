@@ -73,8 +73,8 @@ function App() {
     // Initial check on mount
     checkSession();
 
-    // Check periodically every 30 seconds
-    const interval = setInterval(checkSession, 30000);
+    // Check periodically every 5 seconds
+    const interval = setInterval(checkSession, 5000);
 
     // Check when window gains focus
     const handleFocus = () => {

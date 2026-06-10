@@ -26,7 +26,7 @@ import { Link } from "react-router-dom";
 
 export default function Profile() {
   return (
-    <ProtectedRoute fallbackPath="/auth">
+    <ProtectedRoute fallbackPath="/login">
       <ProfileContent />
     </ProtectedRoute>
   );

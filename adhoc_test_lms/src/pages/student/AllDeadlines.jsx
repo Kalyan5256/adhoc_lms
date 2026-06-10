@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 export default function AllDeadlines() {
   return (
-    <ProtectedRoute fallbackPath="/auth">
+    <ProtectedRoute fallbackPath="/login">
       <AllDeadlinesContent />
     </ProtectedRoute>
   );
