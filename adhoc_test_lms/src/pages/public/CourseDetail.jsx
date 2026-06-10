@@ -247,12 +247,10 @@ export default function CourseDetail() {
     { id: 4, title: "Capstone Project", duration: "5 hours", lessons: 4 },
   ];
 
-  const totalLessons = React.useMemo(() => {
-    return modules.reduce((acc, m) => {
-      const count = Array.isArray(m.lessons) ? m.lessons.length : (parseInt(m.lessons) || 0);
-      return acc + count;
-    }, 0);
-  }, [modules]);
+  const totalLessons = modules.reduce((acc, m) => {
+    const count = Array.isArray(m.lessons) ? m.lessons.length : (parseInt(m.lessons) || 0);
+    return acc + count;
+  }, 0);
 
   const stats = [
     {
