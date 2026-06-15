@@ -296,9 +296,9 @@ function PlayerContent() {
     );
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-surface">
+    <div className="flex flex-col lg:flex-row lg:h-[calc(100vh-112px)] w-full bg-surface">
       {/* Sidebar Navigation */}
-      <aside className="w-full lg:w-[450px] bg-surface-container-low border-r border-surface-dim/20 flex flex-col h-screen relative z-30">
+      <aside className="w-full lg:w-[450px] bg-surface-container-low border-r border-surface-dim/20 flex flex-col lg:h-full h-auto relative z-30 order-2 lg:order-1">
         <div className="p-6 border-b border-surface-dim/20 bg-surface-container-lowest">
           <Link
             to="/dashboard"
@@ -341,7 +341,7 @@ function PlayerContent() {
             postingDoubt={postingDoubt}
           />
         ) : (
-          <div className="flex-grow overflow-y-auto no-scrollbar p-6 space-y-8 bg-surface-container-low/30 backdrop-blur-3xl">
+          <div className="flex-grow lg:overflow-y-auto no-scrollbar p-4 sm:p-6 space-y-6 lg:space-y-8 bg-surface-container-low/30 backdrop-blur-3xl">
             {/* Modules and Lessons */}
             {course.modules?.map((module, i) => {
               const modQuiz = moduleQuizzes.find(
@@ -364,7 +364,7 @@ function PlayerContent() {
                         <button
                           key={lesson.id}
                           onClick={() => handleSelectItem(lesson, "lesson")}
-                          className={`w-full text-left px-6 py-5 rounded-3xl flex items-center gap-4 transition-all group ${activeItem?.id === lesson.id && activeType === "lesson" ? "bg-primary text-white shadow-xl shadow-primary/20 translate-x-1" : "bg-surface-container-lowest hover:bg-surface-container-high"}`}
+                          className={`w-full text-left px-4 py-3 sm:px-6 sm:py-5 rounded-2xl sm:rounded-3xl flex items-center gap-4 transition-all group ${activeItem?.id === lesson.id && activeType === "lesson" ? "bg-primary text-white shadow-xl shadow-primary/20 translate-x-1" : "bg-surface-container-lowest hover:bg-surface-container-high"}`}
                         >
                           <div
                             className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${activeItem?.id === lesson.id && activeType === "lesson" ? "bg-on-primary" : "bg-surface-container-high"}`}
@@ -408,7 +408,7 @@ function PlayerContent() {
                     {modQuiz && (
                       <button
                         onClick={() => handleSelectItem(modQuiz, "quiz")}
-                        className={`w-full text-left px-6 py-5 rounded-3xl flex items-center gap-4 transition-all group ${activeItem?.id === modQuiz.id && activeType === "quiz" ? "bg-blue-600 text-white shadow-xl shadow-blue-500/20 translate-x-1" : "bg-blue-500/10 hover:bg-blue-500/20"}`}
+                        className={`w-full text-left px-4 py-3 sm:px-6 sm:py-5 rounded-2xl sm:rounded-3xl flex items-center gap-4 transition-all group ${activeItem?.id === modQuiz.id && activeType === "quiz" ? "bg-blue-600 text-white shadow-xl shadow-blue-500/20 translate-x-1" : "bg-blue-500/10 hover:bg-blue-500/20"}`}
                       >
                         <div
                           className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${activeItem?.id === modQuiz.id && activeType === "quiz" ? "bg-white/20 text-white" : "bg-blue-500/20 text-blue-600"}`}
@@ -451,7 +451,7 @@ function PlayerContent() {
                     !finalQuizPassed && handleSelectItem(finalQuiz, "quiz")
                   }
                   disabled={finalQuizPassed}
-                  className={`w-full text-left px-6 py-5 rounded-3xl flex items-center gap-4 transition-all group ${
+                  className={`w-full text-left px-4 py-3 sm:px-6 sm:py-5 rounded-2xl sm:rounded-3xl flex items-center gap-4 transition-all group ${
                     finalQuizPassed
                       ? "bg-emerald-500/10 opacity-70 cursor-not-allowed"
                       : activeItem?.id === finalQuiz.id && activeType === "quiz"
@@ -522,9 +522,9 @@ function PlayerContent() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-grow flex flex-col h-screen overflow-hidden bg-surface-container-lowest">
+      <main className="flex-grow flex flex-col lg:h-full h-auto lg:overflow-hidden bg-surface-container-lowest order-1 lg:order-2">
         {!activeItem ? (
-          <div className="flex-grow flex flex-col items-center justify-center text-center p-12">
+          <div className="flex-grow flex flex-col items-center justify-center text-center p-6 sm:p-12">
             <div className="w-24 h-24 rounded-full bg-surface-container flex items-center justify-center text-primary/20 mb-8 border border-surface-dim/20">
               <Play className="w-12 h-12" />
             </div>
@@ -537,9 +537,9 @@ function PlayerContent() {
           </div>
         ) : activeType === "lesson" ? (
           // LESSON PLAYER
-          <div className="flex-grow flex flex-col p-8 lg:p-12 overflow-y-auto no-scrollbar">
+          <div className="flex-grow flex flex-col p-4 sm:p-8 lg:p-12 lg:overflow-y-auto no-scrollbar">
             <div className="w-full max-w-6xl mx-auto flex flex-col h-full">
-              <div className="relative aspect-video bg-primary rounded-[3rem] overflow-hidden shadow-2xl group flex items-center justify-center border-8 border-surface-container-low">
+              <div className="relative aspect-video bg-primary rounded-2xl sm:rounded-[3rem] overflow-hidden shadow-2xl group flex items-center justify-center border-4 sm:border-8 border-surface-container-low">
                 {activeItem.type === "pdf" || activeItem.type === "ppt" ? (
                   <div className="absolute inset-0 w-full h-full bg-surface-container-lowest flex flex-col items-center justify-center text-center p-8">
                     <Layers className="w-20 h-20 text-primary mb-6" />
@@ -596,7 +596,7 @@ function PlayerContent() {
                 )}
               </div>
 
-              <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-8 bg-surface-container-lowest p-10 rounded-[3rem] border border-surface-dim/20 shadow-xl shadow-primary/5">
+              <div className="mt-6 sm:mt-12 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-8 bg-surface-container-lowest p-5 sm:p-10 rounded-2xl sm:rounded-[3rem] border border-surface-dim/20 shadow-xl shadow-primary/5">
                 <div className="flex items-center gap-6">
                   <div className="w-14 h-14 rounded-2xl bg-primary-fixed flex items-center justify-center text-primary shadow-inner">
                     <ShieldCheck className="w-7 h-7" />
@@ -612,7 +612,7 @@ function PlayerContent() {
                 </div>
                 <button
                   onClick={() => handleLessonComplete(activeItem.id)}
-                  className={`flex items-center gap-3 px-12 py-5 rounded-3xl font-headline font-bold text-lg transition-all active:scale-[0.98] ${progress[activeItem.id] === "completed" ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20" : "signature-gradient text-white shadow-xl hover:opacity-90 shadow-primary/20"}`}
+                  className={`w-full md:w-auto flex items-center justify-center gap-3 px-6 py-4 md:px-12 md:py-5 rounded-2xl md:rounded-3xl font-headline font-bold text-sm md:text-lg transition-all active:scale-[0.98] ${progress[activeItem.id] === "completed" ? "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20" : "signature-gradient text-white shadow-xl hover:opacity-90 shadow-primary/20"}`}
                 >
                   {progress[activeItem.id] === "completed" ? (
                     <>
@@ -629,9 +629,9 @@ function PlayerContent() {
           </div>
         ) : (
           // QUIZ INTERFACE
-          <div className="flex-grow flex flex-col p-8 lg:p-12 overflow-y-auto no-scrollbar">
+          <div className="flex-grow flex flex-col p-4 sm:p-8 lg:p-12 lg:overflow-y-auto no-scrollbar">
             <div className="w-full max-w-4xl mx-auto">
-              <div className="bg-surface-container-lowest border border-surface-dim/20 rounded-[3rem] p-10 md:p-16 shadow-2xl">
+              <div className="bg-surface-container-lowest border border-surface-dim/20 rounded-2xl sm:rounded-[3rem] p-5 sm:p-10 md:p-16 shadow-2xl">
                 <div className="flex items-center gap-4 mb-8">
                   <div
                     className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-lg ${activeItem.type === "final" ? "signature-gradient" : "bg-blue-500"}`}
