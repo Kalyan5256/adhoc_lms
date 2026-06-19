@@ -14,19 +14,25 @@ export default function CeoMessageSection() {
         >
           {/* CEO Image */}
           <div className="w-full lg:w-1/3 max-w-[380px]">
-            <div className="rounded-3xl overflow-hidden shadow-2xl border border-surface-dim/20 bg-surface-container-low">
+            <motion.div
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.3 }}
+              className="rounded-3xl overflow-hidden shadow-2xl border border-surface-dim/20 bg-surface-container-low group"
+            >
               <picture>
                 <source srcSet="/ceo-mobile.webp" media="(max-width: 640px)" />
-                <img
+                <motion.img
                   src="/ceo-profile.webp"
                   alt="Devika Pakruthi - CEO"
                   width="300"
                   height="280"
                   loading="lazy"
-                  className="w-full h-auto max-h-[400px] object-contain"
+                  className="w-full h-auto max-h-[400px] object-contain cursor-pointer"
+                  whileHover={{ scale: 1.04 }}
+                  transition={{ duration: 0.4 }}
                 />
               </picture>
-            </div>
+            </motion.div>
           </div>
 
           {/* Content */}

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function PhilosophySection() {
   return (
@@ -37,30 +38,46 @@ export default function PhilosophySection() {
           </ul>
         </div>
         <div className="lg:w-1/2 grid grid-cols-2 gap-4 w-full">
-          <div className="h-48 sm:h-64 rounded-3xl bg-surface-container overflow-hidden hover:scale-105 transition-transform duration-500">
-            <img
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="h-48 sm:h-64 rounded-3xl bg-surface-container overflow-hidden shadow-md group"
+          >
+            <motion.img
               src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=50&fm=webp"
               srcSet="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=300&auto=format&fit=crop&q=50&fm=webp 300w, https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&auto=format&fit=crop&q=50&fm=webp 400w"
               sizes="(max-width: 640px) 300px, 400px"
               width="300"
               height="256"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover cursor-pointer"
               alt="Campus Life"
               loading="lazy"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.4 }}
             />
-          </div>
-          <div className="h-56 sm:h-72 mt-8 sm:mt-12 rounded-3xl bg-surface-container overflow-hidden hover:scale-105 transition-transform duration-500">
-            <img
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="h-56 sm:h-72 mt-8 sm:mt-12 rounded-3xl bg-surface-container overflow-hidden shadow-md group"
+          >
+            <motion.img
               src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=50&fm=webp"
               srcSet="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&auto=format&fit=crop&q=50&fm=webp 300w, https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=50&fm=webp 400w"
               sizes="(max-width: 640px) 300px, 400px"
               width="300"
               height="288"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover cursor-pointer"
               alt="Study"
               loading="lazy"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.4 }}
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

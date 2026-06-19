@@ -289,7 +289,7 @@ export default function Home() {
                   media="(max-width: 640px)"
                   srcSet="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                 />
-                <img
+                <motion.img
                   alt="Students Learning"
                   width="600"
                   height="500"
@@ -299,6 +299,8 @@ export default function Home() {
                   sizes="(max-width: 768px) 100vw, 50vw"
                   fetchPriority="high"
                   loading="eager"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
                 />
               </picture>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>

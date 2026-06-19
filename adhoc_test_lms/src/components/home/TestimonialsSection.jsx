@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Star } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function TestimonialsSection({
   testimonials,
@@ -43,9 +44,14 @@ export default function TestimonialsSection({
                 </div>
               ))
             : testimonials.map((testimonial, idx) => (
-                <div
+                <motion.div
                   key={idx}
-                  className="bg-surface-container-lowest rounded-2xl p-6 border border-surface-dim/20 hover:border-primary/20 transition-all"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  whileHover={{ y: -4 }}
+                  className="bg-surface-container-lowest rounded-2xl p-6 border border-surface-dim/20 hover:border-primary/20 transition-all group"
                 >
                   <div className="flex text-amber-400 mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
@@ -56,24 +62,28 @@ export default function TestimonialsSection({
                     "{testimonial.content}"
                   </p>
                   <div className="flex items-center gap-3">
-                    <img
-                      src={
-                        testimonial.user?.avatar ||
-                        `https://i.pravatar.cc/40?u=${testimonial.id || testimonial.user?.name}`
-                      }
-                      alt={testimonial.user?.name || "User"}
-                      width="40"
-                      height="40"
-                      className="w-10 h-10 rounded-full object-cover"
-                      loading="lazy"
-                    />
+                    <div className="w-10 h-10 rounded-full overflow-hidden">
+                      <motion.img
+                        src={
+                          testimonial.user?.avatar ||
+                          `https://i.pravatar.cc/40?u=${testimonial.id || testimonial.user?.name}`
+                        }
+                        alt={testimonial.user?.name || "User"}
+                        width="40"
+                        height="40"
+                        className="w-full h-full object-cover cursor-pointer"
+                        loading="lazy"
+                        whileHover={{ scale: 1.15 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </div>
                     <div>
                       <p className="font-bold text-sm">
                         {testimonial.user?.name || "Unknown User"}
                       </p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
         </div>
       </div>
