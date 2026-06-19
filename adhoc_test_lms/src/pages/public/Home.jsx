@@ -180,9 +180,9 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-[6.5vw] xs:text-[6vw] sm:text-5xl lg:text-7xl font-headline font-extrabold text-primary tracking-tight leading-[1.1] whitespace-nowrap text-nowrap"
+              className="text-[6.5vw] xs:text-[6vw] sm:text-5xl lg:text-7xl font-headline font-extrabold text-primary tracking-tight leading-[1.1] whitespace-nowrap sm:whitespace-normal"
             >
-              Elevate Your{" "}
+              Elevate Your <br className="hidden sm:inline" />{" "}
               <span className="opacity-80 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                 Learning Journey
               </span>
