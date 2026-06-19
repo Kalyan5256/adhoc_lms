@@ -16,6 +16,7 @@ export default function CeoMessageSection() {
           <div className="w-full lg:w-1/3 max-w-[380px]">
             <motion.div
               whileHover={{ y: -6 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.3 }}
               className="rounded-3xl overflow-hidden shadow-2xl border border-surface-dim/20 bg-surface-container-low group"
             >

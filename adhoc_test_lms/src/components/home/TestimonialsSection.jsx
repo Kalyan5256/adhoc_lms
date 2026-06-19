@@ -51,6 +51,7 @@ export default function TestimonialsSection({
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                   whileHover={{ y: -4 }}
+                  whileTap={{ scale: 0.98 }}
                   className="bg-surface-container-lowest rounded-2xl p-6 border border-surface-dim/20 hover:border-primary/20 transition-all group"
                 >
                   <div className="flex text-amber-400 mb-4">

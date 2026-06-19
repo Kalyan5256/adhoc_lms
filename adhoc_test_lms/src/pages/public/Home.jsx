@@ -278,22 +278,27 @@ export default function Home() {
 
           {/* Hero Image Card */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="relative rounded-[2rem] overflow-hidden bg-surface-container-low border border-surface-dim/20 p-1.5 sm:p-2 ambient-shadow hidden sm:block"
+            className="relative rounded-[2rem] overflow-hidden bg-surface-container-low border border-surface-dim/20 p-1.5 sm:p-2 ambient-shadow block mt-8 lg:mt-0"
           >
-            <div className="relative rounded-3xl overflow-hidden h-[300px] sm:h-[400px] lg:h-[500px]">
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              whileTap={{ scale: 0.98 }}
+              className="relative rounded-3xl overflow-hidden h-[250px] sm:h-[400px] lg:h-[500px] group"
+            >
               <picture>
-                <source
-                  media="(max-width: 640px)"
-                  srcSet="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                />
                 <motion.img
                   alt="Students Learning"
                   width="600"
                   height="500"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover cursor-pointer"
                   src="/hero-optimized.webp"
                   srcSet="/hero-optimized-mobile.webp 600w, /hero-optimized.webp 1200w"
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -321,7 +326,7 @@ export default function Home() {
                   <Play className="w-5 h-5 fill-current" />
                 </Link>
               </div>
-            </div>
+            </motion.div>
 
             {/* Floating badge */}
             <div className="absolute top-5 right-5 bg-primary text-on-primary px-3 py-1 rounded-full text-xs font-bold shadow-lg">

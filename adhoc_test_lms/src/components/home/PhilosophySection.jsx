@@ -55,6 +55,7 @@ export default function PhilosophySection() {
               alt="Campus Life"
               loading="lazy"
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.4 }}
             />
           </motion.div>
@@ -75,6 +76,7 @@ export default function PhilosophySection() {
               alt="Study"
               loading="lazy"
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.4 }}
             />
           </motion.div>
