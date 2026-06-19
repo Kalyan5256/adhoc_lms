@@ -183,9 +183,25 @@ export default function CourseDetail() {
     toast.info(`${feature} feature coming soon!`);
   };
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    toast.success("Link copied to clipboard!");
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: course?.title || "Adhoc Network Tech Course",
+          text: course?.description ? `Check out this course on Adhoc Network Tech: ${course.title} - ${course.description.substring(0, 100)}...` : `Check out this course: ${course?.title || ""}`,
+          url: window.location.href,
+        });
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error("Error sharing:", error);
+          navigator.clipboard.writeText(window.location.href);
+          toast.success("Link copied to clipboard!");
+        }
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast.success("Link copied to clipboard!");
+    }
   };
 
   React.useEffect(() => {
