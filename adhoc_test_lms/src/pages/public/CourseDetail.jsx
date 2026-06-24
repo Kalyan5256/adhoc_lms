@@ -24,6 +24,7 @@ import {
 import { StorageService } from "../../services/storage";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { authStore } from "../../utils/authStore";
 
 export default function CourseDetail() {
   const { id } = useParams();
@@ -46,6 +47,15 @@ export default function CourseDetail() {
   const [enrolling, setEnrolling] = React.useState(false);
   const [selectedPlan, setSelectedPlan] = React.useState("3months");
   const [useCoins, setUseCoins] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(() => authStore.getState().isAuthenticated);
+
+  React.useEffect(() => {
+    setIsAuthenticated(authStore.getState().isAuthenticated);
+    const unsubscribe = authStore.subscribe((state) => {
+      setIsAuthenticated(state.isAuthenticated);
+    });
+    return unsubscribe;
+  }, []);
 
   // Fetch course data
   React.useEffect(() => {
@@ -591,13 +601,23 @@ export default function CourseDetail() {
                 )}
 
                 <button
-                  onClick={handleBookmark}
-                  className="w-full mt-4 py-3 rounded-xl border border-surface-dim/20 text-secondary font-medium hover:bg-surface-container-high transition-all flex items-center justify-center gap-2"
+                  onClick={() => {
+                    if (isAuthenticated) {
+                      handleBookmark();
+                    }
+                  }}
+                  disabled={!isAuthenticated}
+                  className={`w-full mt-4 py-3 rounded-xl border border-surface-dim/20 text-secondary font-medium transition-all flex items-center justify-center gap-2 ${
+                    isAuthenticated
+                      ? "hover:bg-surface-container-high cursor-pointer"
+                      : "opacity-40 cursor-not-allowed"
+                  }`}
+                  title={!isAuthenticated ? "Login to add to wishlist" : ""}
                 >
                   <Bookmark
-                    className={`w-4 h-4 ${isBookmarked ? "fill-primary text-primary" : ""}`}
+                    className={`w-4 h-4 ${isBookmarked && isAuthenticated ? "fill-primary text-primary" : ""}`}
                   />
-                  {isBookmarked ? "Saved to Wishlist" : "Save to Wishlist"}
+                  {isBookmarked && isAuthenticated ? "Saved to Wishlist" : "Save to Wishlist"}
                 </button>
 
                 <button

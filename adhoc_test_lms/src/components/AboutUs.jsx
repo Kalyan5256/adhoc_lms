@@ -10,6 +10,57 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+// Typing Animation Component
+function TypingText({ text, speed = 20 }) {
+  const ref = React.useRef(null);
+  const [displayedText, setDisplayedText] = React.useState("");
+  const [started, setStarted] = React.useState(false);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!started) return;
+    let index = 0;
+    const interval = setInterval(() => {
+      setDisplayedText(text.slice(0, index + 1));
+      index++;
+      if (index >= text.length) {
+        clearInterval(interval);
+      }
+    }, speed);
+    return () => clearInterval(interval);
+  }, [started, text, speed]);
+
+  return (
+    <span ref={ref}>
+      {displayedText}
+      {displayedText.length < text.length && (
+        <span className="inline-block w-[2px] h-[1.1em] ml-1 bg-current animate-pulse align-middle opacity-80">|</span>
+      )}
+    </span>
+  );
+}
+
 export default function AboutUs() {
   const staggerContainer = {
     hidden: { opacity: 0 },
@@ -78,11 +129,11 @@ export default function AboutUs() {
               <h3 className="text-2xl font-headline font-bold relative z-10">
                 Our Vision
               </h3>
-              <p className="opacity-90 leading-relaxed text-lg relative z-10">
-                To be a leading technology and skill development organization
-                that empowers learners, educators, and institutions through
-                innovative digital solutions, industry-focused training, and
-                transformative learning experiences.
+              <p className="opacity-90 leading-relaxed text-lg relative z-10 min-h-[7.5rem] sm:min-h-[6rem] md:min-h-[4.5rem]">
+                <TypingText
+                  text="To be a leading technology and skill development organization that empowers learners, educators, and institutions through innovative digital solutions, industry-focused training, and transformative learning experiences."
+                  speed={20}
+                />
               </p>
             </motion.div>
 
@@ -95,11 +146,11 @@ export default function AboutUs() {
               <h3 className="text-2xl font-headline font-bold relative z-10">
                 Our Mission
               </h3>
-              <p className="opacity-90 leading-relaxed text-lg relative z-10">
-                To deliver innovative technology solutions, industry-relevant
-                training, internships, and experiential learning opportunities
-                that enhance skills, foster innovation, and prepare learners for
-                successful careers.
+              <p className="opacity-90 leading-relaxed text-lg relative z-10 min-h-[7.5rem] sm:min-h-[6rem] md:min-h-[4.5rem]">
+                <TypingText
+                  text="To deliver innovative technology solutions, industry-relevant training, internships, and experiential learning opportunities that enhance skills, foster innovation, and prepare learners for successful careers."
+                  speed={20}
+                />
               </p>
             </motion.div>
 

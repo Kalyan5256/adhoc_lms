@@ -2,6 +2,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Heart, Star, Clock, BookOpen, Users } from "lucide-react";
+import { authStore } from "../../utils/authStore";
 
 const levelColors = {
   beginner:
@@ -28,6 +29,16 @@ export const CourseCard = React.memo(
     duration = 15,
     level = "intermediate",
   }) => {
+    const [isAuthenticated, setIsAuthenticated] = React.useState(() => authStore.getState().isAuthenticated);
+
+    React.useEffect(() => {
+      setIsAuthenticated(authStore.getState().isAuthenticated);
+      const unsubscribe = authStore.subscribe((state) => {
+        setIsAuthenticated(state.isAuthenticated);
+      });
+      return unsubscribe;
+    }, []);
+
     const discount = originalPrice
       ? Math.round(((originalPrice - price) / originalPrice) * 100)
       : 0;
@@ -76,14 +87,28 @@ export const CourseCard = React.memo(
               </h3>
             </Link>
             <button
-              onClick={() => onFavoriteToggle(id)}
+              onClick={() => {
+                if (isAuthenticated) {
+                  onFavoriteToggle(id);
+                }
+              }}
+              disabled={!isAuthenticated}
               aria-label={
-                isFavorite ? "Remove from favorites" : "Add to favorites"
+                !isAuthenticated 
+                  ? "Login to add to favorites" 
+                  : isFavorite 
+                    ? "Remove from favorites" 
+                    : "Add to favorites"
               }
-              className="flex-shrink-0 p-1.5 rounded-full hover:bg-primary/10 transition-colors"
+              className={`flex-shrink-0 p-1.5 rounded-full transition-colors ${
+                isAuthenticated 
+                  ? "hover:bg-primary/10 cursor-pointer" 
+                  : "opacity-40 cursor-not-allowed"
+              }`}
+              title={!isAuthenticated ? "Login to add to wishlist" : ""}
             >
               <Heart
-                className={`w-5 h-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-on-surface-variant"}`}
+                className={`w-5 h-5 ${isFavorite && isAuthenticated ? "fill-red-500 text-red-500" : "text-on-surface-variant"}`}
               />
             </button>
           </div>
