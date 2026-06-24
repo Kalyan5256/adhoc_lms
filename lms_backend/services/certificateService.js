@@ -61,11 +61,11 @@ exports.generatePDF = async (certificateId) => {
       throw new Error('Certificate not found');
     }
     
-    // Create PDF
+    // Create PDF with no default margins so the background fits perfectly
     const doc = new PDFDocument({
       size: 'A4',
       layout: 'landscape',
-      margin: 50
+      margin: 0
     });
     
     // Create filename
@@ -82,79 +82,89 @@ exports.generatePDF = async (certificateId) => {
     const stream = fs.createWriteStream(filepath);
     doc.pipe(stream);
     
-    // Add border
-    doc.rect(20, 20, doc.page.width - 40, doc.page.height - 40)
-       .strokeColor('#4CAF50')
-       .lineWidth(5)
-       .stroke();
+    // Add Background Image
+    const bgPath = path.join(__dirname, '../assets/certificate-background.png');
+    if (fs.existsSync(bgPath)) {
+      doc.image(bgPath, 0, 0, { width: doc.page.width, height: doc.page.height });
+    }
     
-    // Add decorative border
-    doc.rect(30, 30, doc.page.width - 60, doc.page.height - 60)
-       .strokeColor('#FF9800')
-       .lineWidth(2)
-       .stroke();
+    // Add Logo Image
+    const logoPath = path.join(__dirname, '../assets/logo.jpg');
+    if (fs.existsSync(logoPath)) {
+      doc.image(logoPath, 100, 65, { width: 70, height: 70 });
+    }
     
-    // Add header text
-    doc.fontSize(48)
+    // Add header text next to logo
+    doc.fontSize(46)
        .font('Helvetica-Bold')
-       .fillColor('#4CAF50')
-       .text('CERTIFICATE OF COMPLETION', 0, 80, { align: 'center' });
+       .fillColor('#0d3a78')
+       .text('CERTIFICATE', 185, 65);
     
     doc.fontSize(20)
-       .font('Helvetica')
-       .fillColor('#666')
-       .text('This certificate is proudly presented to', 0, 180, { align: 'center' });
-    
-    // Add student name
-    doc.fontSize(42)
        .font('Helvetica-Bold')
-       .fillColor('#2196F3')
-       .text(certificate.user.name, 0, 250, { align: 'center' });
+       .fillColor('#0d3a78')
+       .text('OF COMPLETION', 185, 115, { characterSpacing: 4 });
     
-    // Add course text
-    doc.fontSize(18)
+    // Add presenter subtitle
+    doc.fontSize(16)
        .font('Helvetica')
-       .fillColor('#666')
-       .text('for successfully completing the course', 0, 330, { align: 'center' });
+       .fillColor('#333333')
+       .text('This certificate is proudly presented to', 0, 195, { align: 'center' });
     
-    // Add course name
-    doc.fontSize(28)
+    // Add student name (large, bold, elegant)
+    doc.fontSize(38)
        .font('Helvetica-Bold')
-       .fillColor('#FF9800')
-       .text(certificate.course.title, 0, 380, { align: 'center' });
+       .fillColor('#111111')
+       .text(certificate.user.name, 0, 240, { align: 'center' });
     
-    // Add score
-    doc.fontSize(14)
-       .font('Helvetica')
-       .fillColor('#666')
-       .text(`with a score of ${certificate.quizScore}%`, 0, 450, { align: 'center' });
-    
-    // Add date
-    const issueDate = new Date(certificate.issueDate).toLocaleDateString();
-    doc.fontSize(12)
-       .text(`Issue Date: ${issueDate}`, 50, doc.page.height - 80);
-    
-    // Add certificate number
-    doc.fontSize(10)
-       .text(`Certificate No: ${certificate.certificateNumber}`, 50, doc.page.height - 60);
-    
-    // Add verification code
-    doc.text(`Verification Code: ${certificate.verificationCode}`, 50, doc.page.height - 40);
-    
-    // Add signature
-    doc.fontSize(12)
-       .text('Authorized Signature', doc.page.width - 200, doc.page.height - 80);
-    doc.moveTo(doc.page.width - 250, doc.page.height - 90)
-       .lineTo(doc.page.width - 50, doc.page.height - 90)
-       .stroke();
-    
-    // Add seal
-    doc.circle(doc.page.width - 100, doc.page.height - 50, 30)
-       .strokeColor('#4CAF50')
+    // Add horizontal line under name
+    doc.moveTo(doc.page.width / 2 - 225, 295)
+       .lineTo(doc.page.width / 2 + 225, 295)
+       .strokeColor('#0d3a78')
        .lineWidth(2)
        .stroke();
-    doc.fontSize(10)
-       .text('LMS', doc.page.width - 110, doc.page.height - 60);
+    
+    // Add course completion text
+    doc.fontSize(14)
+       .font('Helvetica')
+       .fillColor('#555555')
+       .text('For successfully completing the comprehensive training program in', 0, 320, { align: 'center' })
+       .font('Helvetica-Bold')
+       .fillColor('#111111')
+       .text(`"${certificate.course.title}"`, 0, 350, { align: 'center' })
+       .font('Helvetica')
+       .fillColor('#555555')
+       .text('on our Learning Management Portal, demonstrating excellence in all modules.', 0, 380, { align: 'center' });
+    
+    // Add signature block at the bottom
+    const sigLineY = 475;
+    doc.moveTo(doc.page.width / 2 - 80, sigLineY)
+       .lineTo(doc.page.width / 2 + 80, sigLineY)
+       .strokeColor('#0d3a78')
+       .lineWidth(1)
+       .stroke();
+       
+    doc.fontSize(13)
+       .font('Helvetica-Bold')
+       .fillColor('#111111')
+       .text('Daniel Benjamin', 0, sigLineY + 10, { align: 'center' })
+       .fontSize(10)
+       .font('Helvetica')
+       .fillColor('#666666')
+       .text('Project director', 0, sigLineY + 26, { align: 'center' });
+    
+    // Add verification block in bottom left
+    const metaY = 525;
+    doc.fontSize(8)
+       .font('Helvetica')
+       .fillColor('#777777')
+       .text(`Certificate No: ${certificate.certificateNumber}`, 50, metaY)
+       .text(`Verification Code: ${certificate.verificationCode}`, 50, metaY + 11)
+       .text(`Issue Date: ${new Date(certificate.issueDate).toLocaleDateString()}`, 50, metaY + 22);
+    
+    if (certificate.quizScore !== null && certificate.quizScore !== undefined) {
+      doc.text(`Final Score: ${certificate.quizScore}%`, 50, metaY + 33);
+    }
     
     // Finalize PDF
     doc.end();
